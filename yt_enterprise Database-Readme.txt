@@ -6,12 +6,7 @@ This README provides instructions for setting up and using the `yt_enterprise` M
 
 1. [Database Overview](#database-overview)
 2. [Prerequisites](#prerequisites)
-3. [Importing the Database](#importing-the-database)
-4. [Using the Database](#using-the-database)
-5. [Troubleshooting](#troubleshooting)
-
-## Database Overview
-
+3. [Importing the
 The `yt_enterprise` database contains information related to the YT-Shirts enterprise, as described in the project documentation.
 
 ## Prerequisites
@@ -25,7 +20,12 @@ To work with the `yt_enterprise` database, you'll need:
 
 1. Open your system's command prompt or terminal.
 
-2. Navigate to the directory where you have saved the `yt_enterprise_dump.sql` file.
+2. Navigate to the di Database](#importing-the-database)
+4. [Using the Database](#using-the-database)
+5. [Troubleshooting](#troubleshooting)
+
+## Database Overview
+rectory where you have saved the `yt_enterprise_dump.sql` file.
 
 3. Run the following command to import the database:
 
