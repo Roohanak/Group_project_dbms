@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+
+
+    
+<head>
+    <title>Shirt Management</title>
+    
+    <link rel="stylesheet" type="text/css" href="style.css">
+</head>
+
+<body>
+
+
+
+    <nav>
+        <div class="nav-container">
+            <a href="#home" class="nav-logo">
+                <img src="YoutubeShirts-logo.png" alt="Your Logo">
+                <a href="#home" class="nav-logo">YouTube Shirts</a>
+            </a>
+            
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="customers.html">Customers</a></li>
+                <li><a href="shirts.html">Shirts</a></li>
+                <li><a href="wishlist.html">Wishlist</a></li>
+                <li><a href="youtuber.html">Youtuber</a></li>
+                
+            </ul>
+        </div>
+    </nav>
+    <main>
+    <div id="page-container">
+        <div id="content-wrap">
+            <div class="centered-container">
+                <h1>Youtuber </h1>
+            
+                <button id="addButton">Add YouTuber</button>
+                <div id="add-customer-tab" style="display: none;">
+               
+
+                  
+            
+                <!--    new  forms         -->
+                <h2>Add a new youtuber</h2>
+                <form id="add-customer-form">
+                <label for="youtuberid">YouTuberID:</label><br>
+                <input type="text" id="youtuberid" name="youtuberid"><br>  
+                <label for="name">Name:</label><br>
+                <input type="text" id="name" name="name"><br>
+                <label for="channel">Color:</label><br>
+                <input type="text" id="channel" name="channel"><br>
+                
+                <button id="submitButton" type="submit">Add Youtuber</button>
+
+                
+            </form>
+            </div>
+
+            <!-- Edit button   -->
+            <button id="addButton">Edit YouTuber</button>
+            <div id="customer-tab" style="display: none;">
+
+            </div>
+
+
+            <!--Delete  button-->
+            <button id="addButton">Delete YouTuber</button>
+            <div id="customer-tab" style="display: none;">
+
+
+            </div>
+
+            <h1>Endorsement </h1>
+            <button id="addButton">Check</button>
+                <div id="add-customer-tab" style="display: none;">
+        </div>
+
+
+
+        
+
+       
+    </div>
+    </main>
+
+
+
+  
+    <footer class="site-footer">
+        <p>&copy; 2023 YouTube Shirts. All rights reserved.</p>
+    </footer>
+   
+
+    <script src="script.js"></script>
+</body>
+
+
+
+
+</html>  

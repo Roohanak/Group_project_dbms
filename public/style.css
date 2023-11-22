@@ -1,0 +1,206 @@
+
+/* for the font roboto*/
+@font-face { 
+    font-family: 'Roboto'; 
+    src: url('https://fonts.googleapis.com/css2?family=Roboto&display=swap'); 
+  } 
+
+
+
+
+
+
+body {
+    font-family: "Roboto", sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    padding-top: 100px;
+}
+
+
+main {
+    flex: 1 0 auto; /* This will push the footer down */
+}
+
+/*format to center*/ 
+.centered-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: auto; /* Full viewport height */
+}
+
+h1, button {
+    margin: 10px; /* Spacing between elements */
+}
+
+
+
+/* Responsive layout */
+@media (max-width: 768px) {
+    /* Styles for screen widths of 768px or less */
+    input[type="text"], button {
+        width: 100%;
+    }
+}
+
+@media (min-width: 769px) {
+    /* Styles for screen widths greater than 768px */
+    .container {
+        width: 80%;
+        margin: auto;
+    }
+}
+
+form {
+    background-color: #f2f2f2;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+input[type="text"] {
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+/*Add customer button*/
+button {
+    padding: 10px 20px;
+    background-color: #FF0000;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+input[type="submit"]:hover {
+    background-color: #0056b3;
+}
+
+ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+li {
+    padding: 0.5em 0;
+}
+
+/* Feedback message customization    */
+.alert-success {
+    color: #3c763d;
+    background-color: #dff0d8;
+    border-color: #d6e9c6;
+    padding: 10px;
+    border-radius: 4px;
+    margin-bottom: 20px;
+}
+
+.alert-error {
+    color: #a94442;
+    background-color: #f2dede;
+    border-color: #ebccd1;
+    padding: 10px;
+    border-radius: 4px;
+    margin-bottom: 20px;
+}
+
+
+
+
+
+
+
+
+/*Nav bar at the top*/
+nav {
+    top: 0%;
+    height: 70px;
+    display: flex;
+    padding: 3px 36px;
+    align-items: center;
+    
+    border-top: 3.3px solid #FF0000;
+    background-color: #222;
+    position: fixed;
+    overflow: hidden;
+    width: 100%;
+    margin-right: 100px;
+    font-family: "Roboto", sans-serif;
+    font-weight: 100;
+    z-index: 9999;
+}
+
+.nav-container {
+    width: 90%;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    
+    justify-content: start; 
+    
+
+}
+
+.nav-logo {
+    color: white;
+    font-size: 24px;
+    text-decoration: none;
+    font-weight: bold;
+    margin-right: 10px;
+    
+}
+.nav-logo img {
+    height: 60px; 
+    width: auto; 
+    vertical-align: middle; 
+}
+
+.nav-links {
+    list-style: none;
+    display: flex;
+    margin: 0;
+    padding: 0;
+}
+
+.nav-links li {
+    margin-left: 20px;
+}
+
+.nav-links li a {
+    color: white;
+    text-decoration: none;
+    font-size: 16px;
+    transition: color 0.3s;
+    margin-left: 40px;
+}
+
+.nav-links li a:hover {
+    color: #CCCCCC; /* Lighter shade for hover effect */
+}
+
+/*footer*/
+
+#page-container {
+    display: flex;
+    flex-direction: column;
+    min-height: 90vh; 
+}
+
+#content-wrap {
+    flex: 1; /* Allows content to expand and push the footer down */
+}
+
+.site-footer {
+    background-color: #222; 
+    color: white;
+    text-align: center;
+    padding: 10px 0;
+    
+}

@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+
+
+    
+<head>
+    <title>Shirt Management</title>
+    
+    <link rel="stylesheet" type="text/css" href="style.css">
+</head>
+
+<body>
+
+
+
+    <nav>
+        <div class="nav-container">
+            <a href="#home" class="nav-logo">
+                <img src="YoutubeShirts-logo.png" alt="Your Logo">
+                <a href="#home" class="nav-logo">YouTube Shirts</a>
+            </a>
+            
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="customers.html">Customers</a></li>
+                <li><a href="shirts.html">Shirts</a></li>
+                <li><a href="wishlist.html">Wishlist</a></li>
+                <li><a href="youtuber.html">Youtuber</a></li>
+                
+            </ul>
+        </div>
+    </nav>
+    <main>
+
+    <div id="page-container">
+        <div id="content-wrap">
+            <div class="centered-container">
+                <h1>Shirts </h1>
+            
+                <button id="addButton">Add Shirt</button>
+                <div id="add-customer-tab" style="display: none;">
+               
+
+                  
+            
+                <!--    new customer forms         -->
+                <h2>Add a new customer</h2>
+                <form id="add-customer-form">
+                <label for="shirtid">ShirtID:</label><br>
+                <input type="text" id="shirtid" name="shirtid"><br>  
+                <label for="size">Size:</label><br>
+                <input type="text" id="size" name="size"><br>
+                <label for="color">Color:</label><br>
+                <input type="text" id="color" name="color"><br>
+                <label for="deadline">Deadline:</label><br>
+                <input type="text" id="deadline" name="deadline"><br>
+                <label for="designpercentage">Design Percentage:</label><br>
+                <input type="text" id="designpercentage" name="designpercentage"><br>
+                <button id="submitButton" type="submit">Add Shirt</button>
+
+                
+            </form>
+            </div>
+
+            <!-- Edit customer button   -->
+            <button id="addButton">Edit Shirt</button>
+            <div id="customer-tab" style="display: none;">
+
+            </div>
+
+
+            <!--Delete customer button-->
+            <button id="addButton">Delete Shirt</button>
+            <div id="customer-tab" style="display: none;">
+
+
+            </div>
+
+            
+            <h1>Returned Shirts </h1>
+            <button id="addButton">Check</button>
+            <div id="add-customer-tab" style="display: none;">
+
+            </div>
+
+
+            
+            <h1>Shirt condition</h1>
+            <button id="addButton">Check</button>
+            <div id="add-customer-tab" style="display: none;">   
+                
+            </div>
+        </div>
+
+       
+    </div>
+
+    </main>
+
+    <footer class="site-footer">
+        <p>&copy; 2023 YouTube Shirts. All rights reserved.</p>
+    </footer>
+
+   
+
+    <script src="script.js"></script>
+</body>
+
+
+
+
+</html>  
