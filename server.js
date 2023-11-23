@@ -19,22 +19,13 @@ const pool = mysql.createPool({
     database: "yt_enterprise_dump"
 });
 
-/*
-// Create an endpoint to get all customers
-app.get('/customers', (req, res) => {
-    pool.query('SELECT * FROM yt_enterprise_dump.customer', (err, results) => {
-        if (err) {
-            console.error(err);
-            res.status(500).json({ error: 'Internal server error' });
-            return;
-        }
-        res.json(results);
-    });
-});
-*/
+
+//**MIGHT BE BETTER TO CREATE A SINGLE FUNCTION FOR EACH CRUD (ADD/UPDATE/DELETE) INSTEAD OF MULTIPLE INSERTS FOR EACH SINGLE THING BUT IM HAVING TROUBLE WITH THAT SO ILL HAVE THIS SCUFF FOR NOW**//
 
 
-// insert customer (Only one working so far, haven't tried the other ones)
+
+
+// insert customer (
 app.post('/customers', (req, res) => {
     const { ID, Name, Email, Address } = req.body;
 
@@ -66,122 +57,46 @@ app.post('/customers', (req, res) => {
 
 
 
-// Create an endpoint to get a specific customer by ID
-app.get('/customers/:id', (req, res) => {
-    const customerId = req.params.id;
-    pool.query('SELECT * FROM yt_enterprise_dump.customer WHERE ID = ? ', [customerId], (err, results) => {
-        if (err) {
-            console.error(err);
-            res.status(500).json({ error: 'Internal server error' });
-            return;
-        }
-        res.json(results);
-    });
-});
 
-
-
-
-
-
-
-
-// Update a customer
-app.put('/customers/:id', (req, res) => {
-    const customerId = req.params.id;
-    const { Name, Email, Address } = req.body;
-    pool.query('UPDATE yt_enterprise_dump.customer SET Name = ?, Email = ?, Address = ? WHERE ID = ?', [Name, Email, Address, customerId], (err, results) => {
-        if (err) {
-            console.error(err);
-            res.status(500).json({ error: 'Internal server error' });
-            return;
-        }
-        res.json(results);
-    });
-});
-
-
-// Delete a customer
-app.delete('/customers/:id', (req, res) => {
-    const customerId = req.params.id;
-    pool.query('DELETE FROM yt_enterprise_dump.customer WHERE ID = ?', [customerId], (err, results) => {
-        if (err) {
-            console.error(err);
-            res.status(500).json({ error: 'Internal server error' });
-            return;
-        }
-        res.json(results);
-    });
-});
-
-
-
-
-
-
-
-// Create a new shirt
+//insert new shirt
 app.post('/shirt', (req, res) => {
-    const { Size, Color, Deadline, DesignPercentage } = req.body;
-    pool.query('INSERT INTO yt_enterprise_dump.shirt (Size, Color, Deadline, DesignPercentage) VALUES (?, ?, ?, ?)', [Size, Color, Deadline, DesignPercentage], (err, results) => {
+    const { shirtID, Size, Color, Deadline, DesignPercentage } = req.body;
+    const insertQuery = 'INSERT INTO yt_enterprise_dump.shirt (shirtID, Size, Color, Deadline, DesignPercentage) VALUES (?, ?, ?, ?, ?)';
+    
+    pool.query(insertQuery, [shirtID, Size, Color, Deadline, DesignPercentage], (err, results) => {
         if (err) {
-            console.error(err);
-            res.status(500).json({ error: 'Internal server error' });
+            if (err.code === 'ER_DUP_ENTRY') {
+                // Handle duplicate entry for shirtID
+                res.status(409).json({ error: 'ShirtID taken' });
+            } else {
+                // Handle other errors
+                console.error(err);
+                res.status(500).json({ error: 'Internal server error' });
+            }
             return;
         }
-        res.json(results);
+        res.json({ message: 'Shirt has been added' });
     });
 });
 
-// Get all shirts
-app.get('/shirt', (req, res) => {
-    pool.query('SELECT * FROM yt_enterprise_dump.shirt', (err, results) => {
+//INSERT new wishlist(not working yet)
+app.post('/wishlist', (req, res) => {
+    const { shirtID, CartID, CustomerID, DateAdded } = req.body;
+    const insertQuery = 'INSERT INTO yt_enterprise_dump.shirt (shirtID, CartID, CustomerID, DateAdded) VALUES (?, ?, ?, ?)';
+    
+    pool.query(insertQuery, [shirtID, CartID, CustomerID, DateAdded], (err, results) => {
         if (err) {
-            console.error(err);
-            res.status(500).json({ error: 'Internal server error' });
+            if (err.code === 'ER_DUP_ENTRY') {
+                // Handle duplicate entry for shirtID
+                res.status(409).json({ error: 'ShirtID taken' });
+            } else {
+                // Handle other errors
+                console.error(err);
+                res.status(500).json({ error: 'Internal server error' });
+            }
             return;
         }
-        res.json(results);
-    });
-});
-
-// Get a specific shirt by ID
-app.get('/shirt/:id', (req, res) => {
-    const shirtId = req.params.id;
-    pool.query('SELECT * FROM yt_enterprise_dump.shirt WHERE ShirtID = ?', [shirtId], (err, results) => {
-        if (err) {
-            console.error(err);
-            res.status(500).json({ error: 'Internal server error' });
-            return;
-        }
-        res.json(results);
-    });
-});
-
-// Update a shirt
-app.put('/shirt/:id', (req, res) => {
-    const shirtId = req.params.id;
-    const { Size, Color, Deadline, DesignPercentage } = req.body;
-    pool.query('UPDATE yt_enterprise_dump.shirt SET Size = ?, Color = ?, Deadline = ?, DesignPercentage = ? WHERE ShirtID = ?', [Size, Color, Deadline, DesignPercentage, shirtId], (err, results) => {
-        if (err) {
-            console.error(err);
-            res.status(500).json({ error: 'Internal server error' });
-            return;
-        }
-        res.json(results);
-    });
-});
-
-// Delete a shirt
-app.delete('/shirt/:id', (req, res) => {
-    const shirtId = req.params.id;
-    pool.query('DELETE FROM yt_enterprise_dump.shirt WHERE ShirtID = ?', [shirtId], (err, results) => {
-        if (err) {
-            console.error(err);
-            res.status(500).json({ error: 'Internal server error' });
-            return;
-        }
-        res.json(results);
+        res.json({ message: 'Wishlist has been added' });
     });
 });
 
@@ -191,20 +106,24 @@ app.delete('/shirt/:id', (req, res) => {
 
 
 
+// Route for the customer page
+app.get('/customers.html', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'customers.html'));
+});
 
 
 
 
-
-
-
-
-
+/*
 // Serve the customer.html file for the root route
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname,'public' , 'customer.html'));
 });
-
+*/
+//fallback route
+app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'index.html'));
+});
 
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`);
