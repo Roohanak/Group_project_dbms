@@ -63,23 +63,50 @@
             </div>
 
             <!-- Edit customer button   -->
-            <button id="addButton">Edit Shirt</button>
+            <button id="edit-customer-button">Edit Shirt</button>
             <div id="customer-tab" style="display: none;">
 
             </div>
 
 
             <!--Delete customer button-->
-            <button id="addButton">Delete Shirt</button>
-            <div id="customer-tab" style="display: none;">
+            <button id="shirt-button">Delete Shirt</button>
+            <div id="shirt-tab" style="display: none;">
+                <form id="delete-shirt-form"></form>
+                <label for="delete-shirtid">ShirtID:</label><br>
+                <input type="text" id="delete-shirtid" name="delete-shirtid"><br> 
+
+                <button id="submitButton" type="submit">Delete Shirt</button>
 
 
             </div>
 
+
+            <h1>Send back a Shirt </h1>
+            <button id="return-shirt-button">Return-Form </button>
+            <div id="return-shirt-tab" style="display: none;">
+                <form id="return-shirt-form">
+                    <label for="returnid">ReturnID:</label><br>
+                    <input type="text" id="returnid" name="returnid"><br>  
+                    <label for="checkername">CheckerName:</label><br>
+                    <input type="text" id="checkername" name="checkername"><br>
+                    <label for="returndate">ReturnDate:</label><br>
+                    <input type="text" id="returndate" name="returndate"><br>
+                    <label for="reasonforreturn">ReasonForReturn:</label><br>
+                    <input type="text" id="reasonforreturn" name="reasonforreturn"><br>
+                    <label for="actiontaken">ActionTaken:</label><br>
+                    <input type="text" id="actiontaken" name="actiontaken"><br>
+                    <button id="submitButton" type="submit">Submit Form</button>
+
+
+                </form>
+            </div>
+
+
             
             <h1>Returned Shirts </h1>
-            <button id="addButton">Check</button>
-            <div id="add-customer-tab" style="display: none;">
+            <button id="returned-shirt-Button">Check</button>
+            <div id="check-returned-tab" style="display: none;">
 
             </div>
 

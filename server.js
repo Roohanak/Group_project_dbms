@@ -19,10 +19,14 @@ const pool = mysql.createPool({
     database: "yt_enterprise_dump"
 });
 
+/*----------------------------------------------------------------------NOTES------------------------------------------------------------------------------------------------------------------
+1.)MIGHT BE BETTER TO CREATE A SINGLE FUNCTION FOR EACH CRUD (ADD/UPDATE/DELETE) INSTEAD OF MULTIPLE INSERTS FOR EACH SINGLE THING BUT IM HAVING TROUBLE WITH THAT SO ILL HAVE THIS SCUFF FOR NOW
+2.)Also for the primary key such as ID and other IDs they need to be incremented as they are entered in the database but to do that I have to remove all the existing restrictions and dependencies but
+I dont want to mess up the database so for now i have them included in the forms to be inputted in.
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------    */
 
-//**MIGHT BE BETTER TO CREATE A SINGLE FUNCTION FOR EACH CRUD (ADD/UPDATE/DELETE) INSTEAD OF MULTIPLE INSERTS FOR EACH SINGLE THING BUT IM HAVING TROUBLE WITH THAT SO ILL HAVE THIS SCUFF FOR NOW**//
 
-
+/**INSERT / ADD OPERATIONS */
 
 
 // insert customer (
@@ -80,26 +84,127 @@ app.post('/shirt', (req, res) => {
 });
 
 //INSERT new wishlist(not working yet)
+//'Cannot add or update a child row: a foreign key constraint fails (`yt_enterprise_dump`.`add-to-wishlist`, CONSTRAINT `shirt_cart_ibfk_1` FOREIGN KEY (`ShirtID`) REFERENCES `shirt` (`ShirtID`)
 app.post('/wishlist', (req, res) => {
     const { shirtID, CartID, CustomerID, DateAdded } = req.body;
-    const insertQuery = 'INSERT INTO yt_enterprise_dump.shirt (shirtID, CartID, CustomerID, DateAdded) VALUES (?, ?, ?, ?)';
-    
-    pool.query(insertQuery, [shirtID, CartID, CustomerID, DateAdded], (err, results) => {
-        if (err) {
-            if (err.code === 'ER_DUP_ENTRY') {
-                // Handle duplicate entry for shirtID
-                res.status(409).json({ error: 'ShirtID taken' });
-            } else {
-                // Handle other errors
-                console.error(err);
-                res.status(500).json({ error: 'Internal server error' });
-            }
-            return;
+
+    // Check if the entry already exists
+    const checkQuery = 'SELECT * FROM `add-to-wishlist` WHERE shirtID = ? OR CartID = ? OR CustomerID = ?';
+    pool.query(checkQuery, [shirtID, CartID, CustomerID], (checkErr, checkResults) => {
+        if (checkErr) {
+            console.error(checkErr);
+            return res.status(500).json({ error: 'Internal server error', details: checkErr });
         }
-        res.json({ message: 'Wishlist has been added' });
+
+        // If the entry already exists, send an error message
+        if (checkResults.length > 0) {
+            return res.status(409).json({ error: 'Entry already exists in wishlist' });
+        }
+
+        // If the entry does not exist, proceed with the insertion
+        const insertQuery = 'INSERT INTO `add-to-wishlist` (shirtID, CartID, CustomerID, DateAdded) VALUES (?, ?, ?, ?)';
+        pool.query(insertQuery, [shirtID, CartID, CustomerID, DateAdded], (insertErr, insertResults) => {
+            if (insertErr) {
+                console.error(insertErr);
+                return res.status(500).json({ error: 'Internal server error', details: insertErr });
+            }
+            // If the insertion is successful, send back the results
+            res.json({ message: 'Wishlist item has been added' });
+        });
     });
 });
 
+
+
+// insert youtuber
+app.post('/youtubers', (req, res) => {
+    const { YouTuberID, Name, Channel } = req.body;
+
+    // First, check if the YouTuberID is already in use
+    const checkQuery = 'SELECT YouTuberID FROM youtuber WHERE YouTuberID = ?';
+    pool.query(checkQuery, [YouTuberID], (err, results) => {
+        if (err) {
+            console.error(err);
+            return res.status(500).json({ error: 'Internal server error', details: err });
+        }
+
+        // If the YouTuberID is already taken, send an error message
+        if (results.length > 0) {
+            return res.status(409).json({ error: 'YouTuberID taken' });
+        }
+
+        // If the YouTuberID is not taken, proceed with the insertion
+        const insertQuery = 'INSERT INTO youtuber (YouTuberID, Name, Channel) VALUES (?, ?, ?)';
+        pool.query(insertQuery, [YouTuberID, Name, Channel], (insertErr, insertResults) => {
+            if (insertErr) {
+                console.error(insertErr);
+                return res.status(500).json({ error: 'Internal server error', details: insertErr });
+            }
+            // If the insertion is successful, send back the results
+            res.json(insertResults);
+        });
+    });
+});
+
+
+// Insert 'Return Shirt form' data
+app.post('/return-form', (req, res) => {
+    const { ReturnID, CheckerName, ReturnDate, ReasonForReturn, ActionTaken } = req.body;
+
+    // First, check if the ReturnID is already taken
+    const checkQuery = 'SELECT ReturnID FROM return_form WHERE ReturnID = ?';
+    pool.query(checkQuery, [ReturnID], (err, results) => {
+        if (err) {
+            console.error(err);
+            return res.status(500).json({ error: 'Internal server error', details: err });
+        }
+
+        // If the ReturnID is already taken, send an error message
+        if (results.length > 0) {
+            return res.status(409).json({ error: 'ReturnID taken' });
+        }
+
+        // If the ReturnID is not taken, proceed with the insertion
+        const insertQuery = 'INSERT INTO return_form (ReturnID, CheckerName, ReturnDate, ReasonForReturn, ActionTaken) VALUES (?, ?, ?, ?, ?)';
+        pool.query(insertQuery, [ReturnID, CheckerName, ReturnDate, ReasonForReturn, ActionTaken], (insertErr, insertResults) => {
+            if (insertErr) {
+                console.error(insertErr);
+                return res.status(500).json({ error: 'Internal server error', details: insertErr });
+            }
+            // If the insertion is successful, send back the results
+            res.json(insertResults);
+        });
+    });
+});
+
+
+
+
+
+
+
+/**DELETE/REMOVE OPERATIONS */
+
+
+/**'Cannot delete or update a parent row: a foreign key constraint fails (`yt_enterprise_dump`.`add-to-wishlist`, CONSTRAINT `shirt_cart_ibfk_3` FOREIGN KEY (`CustomerID`) REFERENCES `customer` (`ID`))', must remove current restriction and probably do cascading delete */
+// Delete a customer by ID
+app.delete('/customers/:id', (req, res) => {
+    const { id } = req.params;
+    
+    const deleteQuery = 'DELETE FROM customer WHERE ID = ?';
+    pool.query(deleteQuery, [id], (err, results) => {
+        if (err) {
+            console.error(err);
+            return res.status(500).json({ error: 'Internal server error', details: err });
+        }
+        if (results.affectedRows === 0) {
+            // No rows affected means no customer with this ID
+            return res.status(404).json({ error: 'Customer not found' });
+        }
+        // Successfully deleted the customer
+        res.json({ message: `Customer with ID ${id} deleted successfully` });
+    });
+});
 
 
 
@@ -112,14 +217,6 @@ app.get('/customers.html', (req, res) => {
 });
 
 
-
-
-/*
-// Serve the customer.html file for the root route
-app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname,'public' , 'customer.html'));
-});
-*/
 //fallback route
 app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'index.html'));

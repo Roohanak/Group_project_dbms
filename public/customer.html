@@ -62,15 +62,28 @@
             </div>
 
             <!-- Edit customer button   -->
-            <button id="addButton">Edit Customer</button>
-            <div id="customer-tab" style="display: none;">
+            <button id="edit-customer-button">Edit Customer</button>
+            <div id="edit-customer-tab" style="display: none;">
+                <form id="edit-customer-form">
+              
+
+
+                </form>
 
             </div>
 
 
             <!--Delete customer button-->
-            <button id="addButton">Delete Customer</button>
-            <div id="customer-tab" style="display: none;">
+            <button id="delete-customer-button">Delete Customer</button>
+            <div id="delete-customer-tab" style="display: none;">
+                <form id="delete-customer-form">
+                    <label for="delete-id">ID:</label><br>
+                    <input type="text" id="delete-id" name="delete-id"><br>
+
+                    <button id="submitButton" type="submit">Delete Customer</button>
+
+
+                </form>
 
 
             </div>
