@@ -1,6 +1,6 @@
 # Group_project_dbms
 
-#Acces the website
+#Access the website
     -Make sure you have the right database info in your server.js 
     const pool = mysql.createPool({
     host: "localhost",
@@ -37,10 +37,12 @@ I dont want to mess up the database so for now i have them included in the forms
 
 3.)Im getting this when i try to implement the delete customer 'Cannot delete or update a parent row: a foreign key constraint fails (`yt_enterprise_dump`.`add-to-wishlist`, CONSTRAINT `shirt_cart_ibfk_3` FOREIGN KEY (`CustomerID`) REFERENCES `customer` (`ID`))', so I think we have to remove the restrictions again before we implement this or do a cascading delete
 
-4.) I know that the website should not be able to add/edit/ modify the database this much but im not sure which ones are needed to be implemented so I tried to be more inclusive as it is much easier to 
+4.) As for the add wishlist when i try to implement it i get:'Cannot add or update a child row: a foreign key constraint fails (`yt_enterprise_dump`.`add-to-wishlist`, CONSTRAINT `shirt_cart_ibfk_1` FOREIGN KEY (`ShirtID`) REFERENCES `shirt` (`ShirtID`) so again we probably need to remove the restriction and dependencies before we can directly add into it 
+
+5.) I know that the website should not be able to add/edit/ modify the database this much but im not sure which ones are needed to be implemented so I tried to be more inclusive as it is much easier to 
 remove a feature than to add new ones.
 
-5.) Im not sure what should go in the home page (index.html)
+6.) Im not sure what should go in the home page (index.html)
 
 
 
