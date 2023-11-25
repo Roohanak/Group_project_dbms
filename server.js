@@ -178,6 +178,137 @@ app.post('/return-form', (req, res) => {
 });
 
 
+// Insert 'Shirt Quality Control' data
+app.post('/shirt-quality', (req, res) => {
+    const { QualityControlID, CheckerName,InspectionDate, QualityRating, QualityIssues } = req.body;
+
+    // First, check if the QualityControlID is already taken
+    const checkQuery = 'SELECT QualityControlID FROM quality_control_form WHERE QualityControlID = ?';
+    pool.query(checkQuery, [QualityControlID], (err, results) => {
+        if (err) {
+            console.error(err);
+            return res.status(500).json({ error: 'Internal server error', details: err });
+        }
+
+        // If the QualityControlID is already taken, send an error message
+        if (results.length > 0) {
+            return res.status(409).json({ error: 'QualityControlID taken' });
+        }
+
+        
+
+        // If the QualityControlID is not taken, proceed with the insertion
+        const insertQuery = 'INSERT INTO quality_control_form (QualityControlID, CheckerName, InspectionDate, QualityRating, QualityIssues) VALUES (?, ?, ?, ?, ? )';
+        pool.query(insertQuery, [QualityControlID, CheckerName, InspectionDate, QualityRating, QualityIssues], (insertErr, insertResults) => {
+            if (insertErr) {
+                console.error(insertErr);
+                return res.status(500).json({ error: 'Internal server error', details: insertErr });
+            }
+            // If the insertion is successful, send back the results
+            res.json({ message: 'Shirt quality control record added successfully', data: insertResults });
+        });
+    });
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+// EDIT/update CRUDE OPERATIONS//
+
+
+// Update a customer by ID
+app.put('/customers/:id', (req, res) => {
+    const { id } = req.params; // Customer ID from the URL
+    const { Name, Email, Address } = req.body; // New data from the request body
+
+    const updateQuery = 'UPDATE customer SET Name = ?, Email = ?, Address = ? WHERE ID = ?';
+    pool.query(updateQuery, [Name, Email, Address, id], (err, results) => {
+        if (err) {
+            console.error(err);
+            return res.status(500).json({ error: 'Internal server error', details: err });
+        }
+        if (results.affectedRows === 0) {
+            // No rows affected means no customer with this ID
+            return res.status(404).json({ error: 'Customer not found' });
+        }
+        // Successfully updated the customer
+        res.json({ message: `Customer with ID ${id} updated successfully` });
+    });
+});
+
+
+
+// Update a shirt by ShirtID
+app.put('/shirts/:id', (req, res) => {
+    const { id } = req.params; 
+    const { Size, Color, Deadline, DesignPercentage } = req.body; // New data from the request body
+
+    const updateQuery = 'UPDATE shirt SET Size = ?, Color = ?, Deadline = ?, DesignPercentage = ? WHERE ShirtID = ?';
+    pool.query(updateQuery, [Size, Color, Deadline, DesignPercentage, id], (err, results) => {
+        if (err) {
+            console.error(err);
+            return res.status(500).json({ error: 'Internal server error', details: err });
+        }
+        if (results.affectedRows === 0) {
+            // No rows affected means no shirt with this ID
+            return res.status(404).json({ error: 'Shirt not found' });
+        }
+        // Successfully updated the shirt
+        res.json({ message: `Shirt with ID ${id} updated successfully` });
+    });
+});
+
+
+// Update a YouTuber by YouTuberID
+app.put('/youtubers/:id', (req, res) => {
+    const { id } = req.params; 
+    const { Name, Channel } = req.body; // New data from the request body
+
+    const updateQuery = 'UPDATE youtuber SET Name = ?, Channel = ? WHERE YouTuberID = ?';
+    pool.query(updateQuery, [Name, Channel, id], (err, results) => {
+        if (err) {
+            console.error(err);
+            return res.status(500).json({ error: 'Internal server error', details: err });
+        }
+        if (results.affectedRows === 0) {
+            // No rows affected means no YouTuber with this ID
+            return res.status(404).json({ error: 'YouTuber not found' });
+        }
+        // Successfully updated the YouTuber
+        res.json({ message: `YouTuber with ID ${id} updated successfully` });
+    });
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

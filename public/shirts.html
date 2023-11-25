@@ -62,14 +62,27 @@
             </form>
             </div>
 
-            <!-- Edit customer button   -->
-            <button id="edit-customer-button">Edit Shirt</button>
-            <div id="customer-tab" style="display: none;">
+            <!-- Edit shirt button   -->
+            <button id="edit-shirt-button">Edit Shirt</button>
+            <div id="edit-shirt-tab" style="display: none;">
+                <form id="edit-shirt-form">
+                    <label for="edit-shirtid">ShirtID:</label><br>
+                    <input type="text" id="edit-shirtid" name="edit-shirtid"><br>
+                    <label for="edit-size">Size:</label><br>
+                    <input type="text" id="edit-size" name="edit-size"><br>
+                    <label for="edit-color">Color:</label><br>
+                    <input type="text" id="edit-color" name="edit-color"><br>
+                    <label for="edit-deadline">Deadline:</label><br>
+                    <input type="text" id="edit-deadline" name="edit-deadline"><br>
+                    <label for="edit-designpercentage">Design Percentage:</label><br>
+                    <input type="text" id="edit-designpercentage" name="edit-designpercentage"><br>
+                    <button id="submitButton" type="submit">Edit Shirt</button>
+                </form>
 
             </div>
 
 
-            <!--Delete customer button-->
+            <!--Delete shirt button-->
             <button id="shirt-button">Delete Shirt</button>
             <div id="shirt-tab" style="display: none;">
                 <form id="delete-shirt-form"></form>
@@ -113,8 +126,29 @@
 
             
             <h1>Shirt condition</h1>
-            <button id="addButton">Check</button>
-            <div id="add-customer-tab" style="display: none;">   
+            <button id="add-shirt_condition-button">Quality Control Form</button>
+            <div id="add-shirt_condition-tab" style="display: none;">  
+                <form id="add-shirt_condition-form">
+                    <label for="qa-id">QualityControlID:</label><br>
+                    <input type="text" id="qa-id" name="qa-id"><br>  
+                    <label for="checkername">CheckerName:</label><br>
+                    <input type="text" id="checkername" name="checkername"><br> 
+                    <label for="inspecdate">InspectionDate:</label><br>
+                    <input type="text" id="inspecdate" name="inspecdate"><br>
+                    <label for="qualityrating">QualityRating:</label><br>
+                    <input type="text" id="qualityrating" name="qualityrating"><br>
+                    <label for="qualityissues">QualityIssues:</label><br>
+                    <input type="text" id="qualityissues" name="qualityissues"><br>
+                
+                    <button id="submitButton" type="submit">Submit Form</button> 
+                </form>
+            </div>
+
+
+            
+            
+            <button id="check-shirt_condition-button">Check a Shirt</button>
+            <div id="check-shirt_condition-tab" style="display: none;">   
                 
             </div>
         </div>
