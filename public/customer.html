@@ -36,69 +36,45 @@
     <div id="page-container">
         <div id="content-wrap">
             <div class="centered-container">
-                <h1>Customers </h1>
-            
-                <button id="addButton">Add Customer</button>
+                <h1>CUSTOMERS</h1>
+
+                <!-- FOR NEW CUSTOMER -->
+                <button id="addButton">New Customer</button>
                 <div id="add-customer-tab" style="display: none;">
-               
+                    <!-- FORM to fill out -->
+                    <h3>Creating a New Customer</h3>
+                        <form id="add-customer-form">
+                        <label for="id">ID:</label><br>
+                            <input type="text" id="id" name="id"><br>  
+                        <label for="name">Name:</label><br>
+                            <input type="text" id="name" name="name"><br>
+                        <label for="email">Email:</label><br>
+                            <input type="text" id="email" name="email"><br>
+                        <label for="address">Address:</label><br>
+                            <input type="text" id="address" name="address"><br>
+                        <button id="submitButton" type="submit">Submit</button>
+                        </form>
+                </div>
 
-                  
+            <!-- FOR EXISTING CUSTOMER -->
+            <button id="existingCustomer">Existing Customer</button>
+            <div id="existingCustomer-tab" style="display: none;">
+                <!-- Table displaying existing customers -->
+                <table id="listCustomers">
+                    <thead>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Address</th>
+                        <th>Edit</th>
+                        <th>Delete</th>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
             
-                <!--    new customer forms         -->
-                <h2>Add a new customer</h2>
-                <form id="add-customer-form">
-                <label for="id">ID:</label><br>
-                <input type="text" id="id" name="id"><br>  
-                <label for="name">Name:</label><br>
-                <input type="text" id="name" name="name"><br>
-                <label for="email">Email:</label><br>
-                <input type="text" id="email" name="email"><br>
-                <label for="address">Address:</label><br>
-                <input type="text" id="address" name="address"><br>
-                <button id="submitButton" type="submit">Add Customer</button>
-
-                
-            </form>
-            </div>
-
-            <!-- Edit customer button   -->
-            <button id="edit-customer-button">Edit Customer</button>
-            <div id="edit-customer-tab" style="display: none;">
-                <form id="edit-customer-form">
-                    <label for="edit-id">ID:</label><br>
-                    <input type="text" id="edit-id" name="edit-id"><br>
-                    <label for="edit-name">Name:</label><br>
-                    <input type="text" id="edit-name" name="edit-name"><br>
-                    <label for="edit-email">Email:</label><br>
-                    <input type="text" id="edit-email" name="edit-email"><br>
-                    <label for="edit-address">Address:</label><br>
-                    <input type="text" id="edit-address" name="edit-address"><br>
-                    <button id="submitButton" type="submit">Edit Customer</button>
-              
-
-
-                </form>
-
-            </div>
-
-
-            <!--Delete customer button-->
-            <button id="delete-customer-button">Delete Customer</button>
-            <div id="delete-customer-tab" style="display: none;">
-                <form id="delete-customer-form">
-                    <label for="delete-id">ID:</label><br>
-                    <input type="text" id="delete-id" name="delete-id"><br>
-
-                    <button id="submitButton" type="submit">Delete Customer</button>
-
-
-                </form>
-
-
             </div>
         </div>
-
-       
     </div>
     </main>
 

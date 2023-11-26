@@ -8,16 +8,15 @@ app.use(express.json()); // This line is important to handle JSON payloads
 
 const path = require('path');
 
-
-// Serve static files from the 'public' directory
-app.use(express.static('public'));
+app.use(express.static('public')); // Serve static files from the 'public' directory
 
 const pool = mysql.createPool({
     host: "localhost",
     user: "root",
-    password: "Flygon=03",
+    password: "password",
     database: "yt_enterprise_dump"
 });
+
 
 /*----------------------------------------------------------------------NOTES------------------------------------------------------------------------------------------------------------------
 1.)MIGHT BE BETTER TO CREATE A SINGLE FUNCTION FOR EACH CRUD (ADD/UPDATE/DELETE) INSTEAD OF MULTIPLE INSERTS FOR EACH SINGLE THING BUT IM HAVING TROUBLE WITH THAT SO ILL HAVE THIS SCUFF FOR NOW
@@ -25,11 +24,30 @@ const pool = mysql.createPool({
 I dont want to mess up the database so for now i have them included in the forms to be inputted in.
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------    */
 
+/***************************************************************************************************************************/
+/*                                                    SELECT OPERATIONS                                                    */
+/***************************************************************************************************************************/
 
-/**INSERT / ADD OPERATIONS */
+// List existing customers in the database
+app.get('/existingCustomers', (req, response) => {
+    const allCustomers = "SELECT * FROM yt_enterprise_dump.customer;"
+
+    pool.query(allCustomers, (err, results) => {
+        if(err) {
+            console.log(err);
+            response.status(500).json({error: "Internal Server Error"});
+        }
+
+        response.json({ data: results });
+    });
+});
+
+/***************************************************************************************************************************/
+/*                                                    INSERT OPERATIONS                                                    */
+/***************************************************************************************************************************/
 
 
-// insert customer (
+// insert customer
 app.post('/customers', (req, res) => {
     const { ID, Name, Email, Address } = req.body;
 
@@ -210,19 +228,9 @@ app.post('/shirt-quality', (req, res) => {
     });
 });
 
-
-
-
-
-
-
-
-
-
-
-
-
-// EDIT/update CRUDE OPERATIONS//
+/***************************************************************************************************************************/
+/*                                                 UPDATE/EDIT OPERATIONS                                                  */
+/***************************************************************************************************************************/
 
 
 // Update a customer by ID
@@ -288,36 +296,13 @@ app.put('/youtubers/:id', (req, res) => {
     });
 });
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/**DELETE/REMOVE OPERATIONS */
+/***************************************************************************************************************************/
+/*                                                DELETE/REMOVE OPERATIONS                                                 */
+/***************************************************************************************************************************/
 
 
 /**'Cannot delete or update a parent row: a foreign key constraint fails (`yt_enterprise_dump`.`add-to-wishlist`, CONSTRAINT `shirt_cart_ibfk_3` FOREIGN KEY (`CustomerID`) REFERENCES `customer` (`ID`))', must remove current restriction and probably do cascading delete */
+
 // Delete a customer by ID
 app.delete('/customers/:id', (req, res) => {
     const { id } = req.params;
@@ -328,12 +313,7 @@ app.delete('/customers/:id', (req, res) => {
             console.error(err);
             return res.status(500).json({ error: 'Internal server error', details: err });
         }
-        if (results.affectedRows === 0) {
-            // No rows affected means no customer with this ID
-            return res.status(404).json({ error: 'Customer not found' });
-        }
-        // Successfully deleted the customer
-        res.json({ message: `Customer with ID ${id} deleted successfully` });
+        res.json({ success: results});
     });
 });
 

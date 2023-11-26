@@ -77,7 +77,11 @@ document.getElementById('delete-customer-button').addEventListener('click', func
     document.getElementById('delete-customer-tab').style.display = 'block';
 });*/
 
-
+// Click and a table of existing customer will appear
+document.getElementById('existingCustomer')?.addEventListener('click', () => {
+    toggleVisibility('existingCustomer-tab', true);
+    toggleVisibility('existingCustomer', false);
+});
 
 
 
@@ -89,7 +93,7 @@ document.getElementById('add-customer-form')?.addEventListener('submit', (event)
     const email = document.getElementById('email').value;
     const address = document.getElementById('address').value;
 
-    fetch('/customers', {
+    fetch('http://localhost:3000/customers', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ ID: id, Name: name, Email: email, Address: address }),
@@ -117,6 +121,7 @@ document.getElementById('add-customer-form')?.addEventListener('submit', (event)
         console.error('Error:', error);
     });
 });
+
 
 // Event listener for the add shirt form submission
 const shirtForm = document.getElementById('add-shirt-form');
@@ -357,11 +362,9 @@ document.getElementById('add-shirt_condition-form')?.addEventListener('submit', 
 });
 
 
-
-
-//EDIT CRUD OPERATIONS//
-
-
+/***************************************************************************************************************************/
+/*                                                 EDIT CRUD OPERATIONS                                                    */
+/***************************************************************************************************************************/
 
 // event listners for edit customers
 document.getElementById('edit-customer-form')?.addEventListener('submit', (event) => {
@@ -512,33 +515,85 @@ document.getElementById('edit-youtuber-form')?.addEventListener('submit', (event
 
 
 
-
-/**DELETE/REMOVE OPERATION */
-
-
+/***************************************************************************************************************************/
+/*                                                 DELETE/REMOVE OPERATIONS                                                */
+/***************************************************************************************************************************/
 /**'Cannot delete or update a parent row: a foreign key constraint fails (`yt_enterprise_dump`.`add-to-wishlist`, CONSTRAINT `shirt_cart_ibfk_3` FOREIGN KEY (`CustomerID`) REFERENCES `customer` (`ID`))', must remove current restriction and probably do cascading delete */
 // Event listener for the 'Delete Customer' form submission
-document.getElementById('delete-customer-form')?.addEventListener('submit', (event) => {
-    event.preventDefault();
-    const customerId = document.getElementById('delete-id').value;
+// document.getElementById('delete-customer-form')?.addEventListener('submit', (event) => {
+//     event.preventDefault();
+//     const customerId = document.getElementById('delete-id').value;
 
-    fetch(`/customers/${customerId}`, {
-        method: 'DELETE'
-    })
-    .then(response => {
-        if (!response.ok) {
-            throw new Error('Network response was not ok');
-        }
-        return response.json();
-    })
-    .then(data => {
-        console.log('Success:', data);
-        alert("Customer has been successfully deleted from the database.");
-        window.location.href = 'customer.html'; // Redirect 
-    })
-    .catch(error => {
-        console.error('Error:', error);
-        alert("An error occurred. Please try again later.");
-    });
+//     fetch(`/customers/${customerId}`, {
+//         method: 'DELETE'
+//     })
+//     .then(response => {
+//         if (!response.ok) {
+//             throw new Error('Network response was not ok');
+//         }
+//         return response.json();
+//     })
+//     .then(data => {
+//         console.log('Success:', data);
+//         alert("Customer has been successfully deleted from the database.");
+//         window.location.href = 'customer.html'; // Redirect 
+//     })
+//     .catch(error => {
+//         console.error('Error:', error);
+//         alert("An error occurred. Please try again later.");
+//     });
+// });
+
+// Button options in the table: edit or delete
+document.querySelector('table tbody').addEventListener('click', function(event) {
+    if (event.target.className === "delete-row-btn") {
+        deleteRowById(event.target.dataset.id);
+    }
 });
 
+// DELETE customer information based on ID
+function deleteRowById(id) {
+    fetch('http://localhost:3000/customers/' + id, {
+        method: 'DELETE'
+    })
+    .then(res => res.json())
+    .then(data => {
+        if (data.success)
+            location.reload();
+    });
+}
+
+/***************************************************************************************************************************/
+/*                                             TABLE DISPLAYING EXISTING DATA                                              */
+/***************************************************************************************************************************/
+document.addEventListener('DOMContentLoaded', function() {
+    fetch('http://localhost:3000/existingCustomers')
+    .then(response => response.json())
+    .then(data => loadHTMLTable(data['data']));
+});
+
+function loadHTMLTable(data) {
+    const table = document.querySelector('table tbody');
+
+    console.log(data);
+    
+    if (data.length === 0) {
+        table.innerHTML = "<tr><td class='no-data' colspan='6' align='center'><em>There's currently no customer information</em></td></tr>";
+        return;
+    }
+
+    let tableHtml = "";
+
+    data.forEach(function ({ID, Name, Email, Address}) {
+        tableHtml += "<tr>";
+        tableHtml += `<td>${ID}</td>`;
+        tableHtml += `<td>${Name}</td>`;
+        tableHtml += `<td>${Email}</td>`;
+        tableHtml += `<td>${Address}</td>`;
+        tableHtml += `<td><button class="edit-row-btn" data-id=${ID}>Edit</td>`;
+        tableHtml += `<td><button class="delete-row-btn" data-id=${ID}>Delete</td>`;
+        tableHtml += "</tr>";
+    });
+
+    table.innerHTML = tableHtml;
+}
