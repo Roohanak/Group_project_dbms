@@ -8,12 +8,6 @@ const toggleVisibility = (elementId, isVisible) => {
     }
 };
 
-// Event listeners for ADD buttons
-document.getElementById('addButton')?.addEventListener('click', () => {
-    toggleVisibility('add-customer-tab', true);
-    toggleVisibility('addButton', false);
-});
-
 //add shirt event listener
 document.getElementById('add-shirt-button')?.addEventListener('click', () => {
     toggleVisibility('add-shirt-tab', true);
@@ -49,10 +43,10 @@ document.getElementById('add-shirt_condition-button')?.addEventListener('click',
 
 
 // Event listener for 'Edit Customer' button
-document.getElementById('edit-customer-button')?.addEventListener('click', () => {
-    toggleVisibility('edit-customer-tab', true);
-    toggleVisibility('edit-customer-button', false);
-});
+// document.getElementById('edit-customer-button')?.addEventListener('click', () => {
+//     toggleVisibility('edit-customer-tab', true);
+//     toggleVisibility('edit-customer-button', false);
+// });
 
 
 // Event listener for 'Edit Shirt' button
@@ -76,12 +70,6 @@ document.getElementById('edit-youtuber-button')?.addEventListener('click', () =>
 document.getElementById('delete-customer-button').addEventListener('click', function() {
     document.getElementById('delete-customer-tab').style.display = 'block';
 });*/
-
-// Click and a table of existing customer will appear
-document.getElementById('existingCustomer')?.addEventListener('click', () => {
-    toggleVisibility('existingCustomer-tab', true);
-    toggleVisibility('existingCustomer', false);
-});
 
 
 
@@ -407,6 +395,16 @@ document.getElementById('edit-customer-form')?.addEventListener('submit', (event
     });
 });
 
+// UPDATE customer information form appears
+function editRowById(id) {
+    const updateForm = document.querySelector('#edit-customer');
+
+    const editIdInput = document.querySelector('#edit-id');
+    editIdInput.value = id;
+
+    updateForm.hidden = false;
+}
+
 
 // Event listener for 'Edit Shirt' form submission
 document.getElementById('edit-shirt-form')?.addEventListener('submit', (event) => {
@@ -519,35 +517,14 @@ document.getElementById('edit-youtuber-form')?.addEventListener('submit', (event
 /*                                                 DELETE/REMOVE OPERATIONS                                                */
 /***************************************************************************************************************************/
 /**'Cannot delete or update a parent row: a foreign key constraint fails (`yt_enterprise_dump`.`add-to-wishlist`, CONSTRAINT `shirt_cart_ibfk_3` FOREIGN KEY (`CustomerID`) REFERENCES `customer` (`ID`))', must remove current restriction and probably do cascading delete */
-// Event listener for the 'Delete Customer' form submission
-// document.getElementById('delete-customer-form')?.addEventListener('submit', (event) => {
-//     event.preventDefault();
-//     const customerId = document.getElementById('delete-id').value;
 
-//     fetch(`/customers/${customerId}`, {
-//         method: 'DELETE'
-//     })
-//     .then(response => {
-//         if (!response.ok) {
-//             throw new Error('Network response was not ok');
-//         }
-//         return response.json();
-//     })
-//     .then(data => {
-//         console.log('Success:', data);
-//         alert("Customer has been successfully deleted from the database.");
-//         window.location.href = 'customer.html'; // Redirect 
-//     })
-//     .catch(error => {
-//         console.error('Error:', error);
-//         alert("An error occurred. Please try again later.");
-//     });
-// });
-
-// Button options in the table: edit or delete
+// Button options in the table: edit or delete existing customer
 document.querySelector('table tbody').addEventListener('click', function(event) {
     if (event.target.className === "delete-row-btn") {
         deleteRowById(event.target.dataset.id);
+    }
+    if (event.target.className === "edit-row-btn") {
+        editRowById(event.target.dataset.id);
     }
 });
 
@@ -558,20 +535,28 @@ function deleteRowById(id) {
     })
     .then(res => res.json())
     .then(data => {
-        if (data.success)
+        alert(`Customer has been successfully removed from the database.`);
+        if (data.success) {
             location.reload();
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
     });
 }
 
 /***************************************************************************************************************************/
 /*                                             TABLE DISPLAYING EXISTING DATA                                              */
 /***************************************************************************************************************************/
+
+// Loading customer data
 document.addEventListener('DOMContentLoaded', function() {
     fetch('http://localhost:3000/existingCustomers')
     .then(response => response.json())
     .then(data => loadHTMLTable(data['data']));
 });
 
+// Table of existing customer
 function loadHTMLTable(data) {
     const table = document.querySelector('table tbody');
 

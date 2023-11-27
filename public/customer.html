@@ -1,94 +1,81 @@
 <!DOCTYPE html>
-<html>
+<html>   
+    <head>
+        <title>Customers</title>
+        <link rel="stylesheet" type="text/css" href="style.css">
+    </head>
 
-
-    
-<head>
-    <title>Customer Management</title>
-    
-    <link rel="stylesheet" type="text/css" href="style.css">
-</head>
-
-<body>
-
-
-
-    <nav>
-        <div class="nav-container">
-            <a href="#home" class="nav-logo">
-                <img src="YoutubeShirts-logo.png" alt="Your Logo">
-                <a href="#home" class="nav-logo">YouTube Shirts</a>
-            </a>
-            
-            <ul class="nav-links">
-                <li><a href="index.html">Home</a></li>
-                <li><a href="customer.html">Customers</a></li>
-                <li><a href="shirts.html">Shirts</a></li>
-                <li><a href="wishlist.html">Wishlist</a></li>
-                <li><a href="youtuber.html">Youtuber</a></li>
+    <body>
+        <nav>
+            <div class="nav-container">
+                <a href="#home" class="nav-logo">
+                    <img src="YoutubeShirts-logo.png" alt="Your Logo">
+                    <a href="#home" class="nav-logo">YouTube Shirts</a>
+                </a>
                 
-            </ul>
-        </div>
-    </nav>
+                <ul class="nav-links">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="customer.html">Customers</a></li>
+                    <li><a href="shirts.html">Shirts</a></li>
+                    <li><a href="wishlist.html">Wishlist</a></li>
+                    <li><a href="youtuber.html">Youtuber</a></li>  
+                </ul>
+            </div>
+        </nav>
 
-    <main>
+        <main>
+            <div id="page-container">
+                <div id="content-wrap">
+                    <div class="centered-container">
+                        <header><h1>CUSTOMERS</h1></header>
 
-    <div id="page-container">
-        <div id="content-wrap">
-            <div class="centered-container">
-                <h1>CUSTOMERS</h1>
-
-                <!-- FOR NEW CUSTOMER -->
-                <button id="addButton">New Customer</button>
-                <div id="add-customer-tab" style="display: none;">
-                    <!-- FORM to fill out -->
-                    <h3>Creating a New Customer</h3>
+                        <!-- FOR NEW CUSTOMER -->
+                        <h1>New? Join us!</h1>
+                        <!-- FORM to fill out -->
                         <form id="add-customer-form">
-                        <label for="id">ID:</label><br>
-                            <input type="text" id="id" name="id"><br>  
-                        <label for="name">Name:</label><br>
-                            <input type="text" id="name" name="name"><br>
-                        <label for="email">Email:</label><br>
-                            <input type="text" id="email" name="email"><br>
-                        <label for="address">Address:</label><br>
-                            <input type="text" id="address" name="address"><br>
-                        <button id="submitButton" type="submit">Submit</button>
+                            <h2 style="text-align: center;">Create a New Customer:</h2>
+                            <div class="form-box">
+                                <input type="text" id="id" name="id" placeholder="ID">
+                                <input type="text" id="name" name="name" placeholder="Name">
+                                <input type="text" id="email" name="email" placeholder="Email">
+                                <input type="text" id="address" name="address" placeholder="Address">
+                                <button id="submitButton" type="submit">Submit</button>
+                            </div>
                         </form>
+
+                        <!-- FOR EXISTING CUSTOMER -->
+                        <h1>EXISTING CUSTOMERS</h1>
+                        <table id="listCustomers">
+                            <thead>
+                                <th>ID</th>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Address</th>
+                                <th>Edit</th>
+                                <th>Delete</th>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+
+                        <!-- USER EDIT INFO -->
+                        <section hidden id="edit-customer">
+                            <form id="edit-customer-form">
+                                <input type="text" id="edit-id" name="id" placeholder="ID">
+                                <input type="text" id="edit-name" name="name" placeholder="Name">
+                                <input type="text" id="edit-email" name="email" placeholder="Email">
+                                <input type="text" id="edit-address" name="address" placeholder="Address">
+                                <button id="edit-row-btn">Update</button>
+                            </form>
+                        </section>
+                    </div>
                 </div>
-
-            <!-- FOR EXISTING CUSTOMER -->
-            <button id="existingCustomer">Existing Customer</button>
-            <div id="existingCustomer-tab" style="display: none;">
-                <!-- Table displaying existing customers -->
-                <table id="listCustomers">
-                    <thead>
-                        <th>ID</th>
-                        <th>Name</th>
-                        <th>Email</th>
-                        <th>Address</th>
-                        <th>Edit</th>
-                        <th>Delete</th>
-                    </thead>
-                    <tbody></tbody>
-                </table>
             </div>
-            
-            </div>
-        </div>
-    </div>
-    </main>
+        </main>
 
+        <footer class="site-footer">
+            <p>&copy; 2023 YouTube Shirts. All rights reserved.</p>
+        </footer>
 
-    <footer class="site-footer">
-        <p>&copy; 2023 YouTube Shirts. All rights reserved.</p>
-    </footer>
-
-   
-
-    <script src="script.js"></script>
-</body>
-
-
-
-
+        <script src="script.js"></script>
+    </body>
 </html>  
