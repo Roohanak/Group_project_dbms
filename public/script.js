@@ -46,6 +46,20 @@ document.getElementById('add-shirt_condition-button')?.addEventListener('click',
     toggleVisibility('add-shirt_condition-button', false);
 });
 
+// Event listener for 'buy' button
+document.getElementById('add-buy-button')?.addEventListener('click', () => {
+    toggleVisibility('add-buy-tab', true);
+    toggleVisibility('add-buy-button', false);
+});
+
+
+// Event listener for 'add endorsement' button
+document.getElementById('add-endorsement-button')?.addEventListener('click', () => {
+    toggleVisibility('add-endorsement-tab', true);
+    toggleVisibility('add-endorsement-button', false);
+});
+
+
 
 
 // Event listener for 'Edit Customer' button
@@ -169,21 +183,18 @@ if (shirtForm) {
 
 
 
-// Event listener for the wishlist form submission(not working yet)
-//'Cannot add or update a child row: a foreign key constraint fails (`yt_enterprise_dump`.`add-to-wishlist`, CONSTRAINT `shirt_cart_ibfk_1` FOREIGN KEY (`ShirtID`) REFERENCES `shirt` (`ShirtID`)
+// Event listener for the wishlist form submission(might not be how you populate this table)
+
 const wishForm = document.getElementById('add-wishlist-form');
 if (wishForm) {
     wishForm.addEventListener('submit', function(event) {
         event.preventDefault();
-    
-        // Collect the form data
+
         const shirtid = document.getElementById('shirtid').value;
         const cartid = document.getElementById('cartid').value;
         const customerid = document.getElementById('customerid').value;
         const dateadded = document.getElementById('dateadded').value;
-        
-        
-        // Send the POST request
+
         fetch('/wishlist', {
             method: 'POST',
             headers: {
@@ -191,35 +202,43 @@ if (wishForm) {
             },
             body: JSON.stringify({ shirtID: shirtid, CartID: cartid, CustomerID: customerid, DateAdded: dateadded }),
         })
-        .then(response => {
-            if (response.status === 409) {
-                alert("ID taken. Please try a different  cart ID.");
+        .then(response => response.json().then(data => ({ status: response.status, body: data })))
+        .then(result => {
+            if (result.status === 409) {
+                // Specific error handling for conflicts
+                if (result.body.error.includes("CartID already exists")) {
+                    alert("CartID already exists. Please try a different ID.");
+                } else if (result.body.error.includes("ShirtID conflict")) {
+                    alert("Conflict with ShirtID. Please try a different ID.");
+                } else if (result.body.error.includes("CustomerID conflict")) {
+                    alert("Conflict with CustomerID. Please try a different ID.");
+                }
                 return;
             }
-            if (!response.ok) {
-                // Handle other errors
+            if (result.status === 404) {
+                // Specific error handling for not found
+                if (result.body.error.includes("ShirtID does not exist")) {
+                    alert("ShirtID does not exist. Please try a different ID.");
+                } else if (result.body.error.includes("CustomerID does not exist")) {
+                    alert("CustomerID does not exist. Please try a different ID.");
+                }
+                return;
+            }
+            if (result.status !== 200) {
                 alert("An error occurred. Please try again later.");
                 return;
             }
-            return response.json();
-        })
-        .then(data => {
-            // Show success message
-            if (data) {
-                console.log('Success:', data);
-                alert("Form has been successfully inserted into the database.");
-    
-                //go back to 
-                window.location.href = 'wishlist.html';
-            }
+
+            console.log('Success:', result.body);
+            alert("Form has been successfully inserted into the wishlist.");
+            window.location.href = 'wishlist.html';
         })
         .catch(error => {
-            // Show error message
             console.error('Error:', error);
+            alert("An error occurred while processing your request.");
         });
     });
 }
-
 
 
 
@@ -355,6 +374,94 @@ document.getElementById('add-shirt_condition-form')?.addEventListener('submit', 
         alert("An error occurred. Please try again later.");
     });
 });
+
+
+//  event listner for buy button
+const buyForm = document.getElementById('add-buy-form');
+if (buyForm) {
+    buyForm.addEventListener('submit', function(event) {
+        event.preventDefault();
+
+        const customerid = document.getElementById('customerid').value;
+        const shirtid = document.getElementById('shirtid').value;
+        const purchaseid = document.getElementById('purchaseid').value;
+
+        fetch('/buy', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ CustomerID: customerid, ShirtID: shirtid, PurchaseDate: purchaseid }),
+        })
+        .then(response => response.json().then(data => ({ status: response.status, body: data })))
+        .then(result => {
+            if (result.status === 404) {
+                if (result.body.error.includes("ShirtID does not exist")) {
+                    alert("ShirtID does not exist. Please try a different ID.");
+                } else if (result.body.error.includes("CustomerID does not exist")) {
+                    alert("CustomerID does not exist. Please try a different ID.");
+                }
+                return;
+            }
+            if (result.status !== 200) {
+                alert("An error occurred. Please try again later.");
+                return;
+            }
+
+            console.log('Success:', result.body);
+            alert("Purchase was successfully made.");
+            window.location.href = 'index.html'; 
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert("An error occurred while processing your request.");
+        });
+    });
+}
+
+
+//event listner for add endorsement 
+const endorsementForm = document.getElementById('add-endorsement-form');
+if (endorsementForm) {
+    endorsementForm.addEventListener('submit', function(event) {
+        event.preventDefault();
+
+        const youtuberID = document.getElementById('add-youtuberID').value;
+        const shirtid = document.getElementById('add-shirtid').value;
+
+        fetch('/endorsement', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ YoutuberID: youtuberID, ShirtID: shirtid }),
+        })
+        .then(response => response.json().then(data => ({ status: response.status, body: data })))
+        .then(result => {
+            if (result.status === 404) {
+                if (result.body.error.includes("YoutuberID does not exist")) {
+                    alert("YoutuberID does not exist. Please try a different ID.");
+                } else if (result.body.error.includes("ShirtID does not exist")) {
+                    alert("ShirtID does not exist. Please try a different ID.");
+                }
+                return;
+            }
+            if (result.status !== 200) {
+                alert("An error occurred. Please try again later.");
+                return;
+            }
+
+            console.log('Success:', result.body);
+            alert("Endorsement successfully added.");
+            window.location.href = 'youtuber.html'; 
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert("An error occurred while processing your request.");
+        });
+    });
+}
+
 
 
 

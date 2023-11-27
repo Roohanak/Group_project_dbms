@@ -83,33 +83,50 @@ app.post('/shirt', (req, res) => {
     });
 });
 
-//INSERT new wishlist(not working yet)
-//'Cannot add or update a child row: a foreign key constraint fails (`yt_enterprise_dump`.`add-to-wishlist`, CONSTRAINT `shirt_cart_ibfk_1` FOREIGN KEY (`ShirtID`) REFERENCES `shirt` (`ShirtID`)
+//INSERT new wishlist(might not be how you populate this table)
+
 app.post('/wishlist', (req, res) => {
     const { shirtID, CartID, CustomerID, DateAdded } = req.body;
 
-    // Check if the entry already exists
-    const checkQuery = 'SELECT * FROM `add-to-wishlist` WHERE shirtID = ? OR CartID = ? OR CustomerID = ?';
-    pool.query(checkQuery, [shirtID, CartID, CustomerID], (checkErr, checkResults) => {
-        if (checkErr) {
-            console.error(checkErr);
-            return res.status(500).json({ error: 'Internal server error', details: checkErr });
+    // Check if CartID already exists
+    const checkCartQuery = 'SELECT CartID FROM `add-to-wishlist` WHERE CartID = ?';
+    pool.query(checkCartQuery, [CartID], (cartErr, cartResults) => {
+        if (cartErr) {
+            // Handle server error during CartID check
+            //console.error("Database error during CartID check:", cartErr);
+            //return res.status(500).json({ error: 'Internal server error', details: cartErr });
+            return res.status(500).json({ error: 'Internal server error' });
+        }
+        if (cartResults.length > 0) {
+            // Return conflict error if CartID already exists
+            return res.status(409).json({ error: 'CartID already exists' });
         }
 
-        // If the entry already exists, send an error message
-        if (checkResults.length > 0) {
-            return res.status(409).json({ error: 'Entry already exists in wishlist' });
-        }
-
-        // If the entry does not exist, proceed with the insertion
-        const insertQuery = 'INSERT INTO `add-to-wishlist` (shirtID, CartID, CustomerID, DateAdded) VALUES (?, ?, ?, ?)';
-        pool.query(insertQuery, [shirtID, CartID, CustomerID, DateAdded], (insertErr, insertResults) => {
-            if (insertErr) {
-                console.error(insertErr);
-                return res.status(500).json({ error: 'Internal server error', details: insertErr });
+        // Check if ShirtID exists in the shirt table
+        const checkShirtQuery = 'SELECT ShirtID FROM shirt WHERE ShirtID = ?';
+        pool.query(checkShirtQuery, [shirtID], (shirtErr, shirtResults) => {
+            if (shirtErr || shirtResults.length === 0) {
+                return res.status(404).json({ error: 'ShirtID does not exist' });
             }
-            // If the insertion is successful, send back the results
-            res.json({ message: 'Wishlist item has been added' });
+
+            // Check if CustomerID exists in the customer table
+            const checkCustomerQuery = 'SELECT ID FROM customer WHERE ID = ?';
+            pool.query(checkCustomerQuery, [CustomerID], (customerErr, customerResults) => {
+                if (customerErr || customerResults.length === 0) {
+                    return res.status(404).json({ error: 'CustomerID does not exist' });
+                }
+
+                // Insert into the wishlist table if both IDs exist
+                const insertQuery = 'INSERT INTO `add-to-wishlist` (shirtID, CartID, CustomerID, DateAdded) VALUES (?, ?, ?, ?)';
+                pool.query(insertQuery, [shirtID, CartID, CustomerID, DateAdded], (insertErr, insertResults) => {
+                    if (insertErr) {
+                        // Handle insertion error
+                        return res.status(500).json({ error: 'Failed to add to wishlist' });
+                    }
+
+                    res.status(200).json({ message: 'Added to wishlist successfully' });
+                });
+            });
         });
     });
 });
@@ -212,6 +229,85 @@ app.post('/shirt-quality', (req, res) => {
 
 
 
+//insert BUY 
+app.post('/buy', (req, res) => {
+    const { CustomerID, ShirtID, PurchaseDate } = req.body;
+
+    // Check if ShirtID exists in the shirt table
+    const checkShirtQuery = 'SELECT ShirtID FROM shirt WHERE ShirtID = ?';
+    pool.query(checkShirtQuery, [ShirtID], (shirtErr, shirtResults) => {
+        if (shirtErr || shirtResults.length === 0) {
+            return res.status(404).json({ error: 'ShirtID does not exist' });
+        }
+
+        // Check if CustomerID exists in the customer table
+        const checkCustomerQuery = 'SELECT ID FROM customer WHERE ID = ?';
+        pool.query(checkCustomerQuery, [CustomerID], (customerErr, customerResults) => {
+            if (customerErr || customerResults.length === 0) {
+                return res.status(404).json({ error: 'CustomerID does not exist' });
+            }
+
+            // Insert into the purchase table if both IDs exist
+            const insertQuery = 'INSERT INTO `buy` (CustomerID, ShirtID, PurchaseDate) VALUES (?, ?, ?)';
+            pool.query(insertQuery, [CustomerID, ShirtID, PurchaseDate], (insertErr, insertResults) => {
+                if (insertErr) {
+                    // Handle insertion error
+                    console.error("Database error during insert:", insertErr);
+                     return res.status(500).json({ error: 'Failed to make purchase', details: insertErr });
+
+                }
+
+                res.status(200).json({ message: 'Purchase successfully made' });
+            });
+        });
+    });
+});
+
+
+// insert endorsement   for youtubers
+app.post('/endorsement', (req, res) => {
+    const { YoutuberID, ShirtID } = req.body;
+
+    // First, check if the endorsement already exists
+    const checkExistQuery = 'SELECT * FROM endorsement WHERE YoutuberID = ? AND ShirtID = ?';
+    pool.query(checkExistQuery, [YoutuberID, ShirtID], (existErr, existResults) => {
+        if (existErr) {
+            console.error("Database error during existence check:", existErr);
+            return res.status(500).json({ error: 'Internal server error', details: existErr });
+        }
+
+        if (existResults.length > 0) {
+            return res.status(409).json({ error: 'Endorsement already exists' });
+        }
+
+        // Check if YoutuberID exists
+        const checkYoutuberQuery = 'SELECT YouTuberID FROM youtuber WHERE YouTuberID = ?';
+        pool.query(checkYoutuberQuery, [YoutuberID], (youtuberErr, youtuberResults) => {
+            if (youtuberErr || youtuberResults.length === 0) {
+                return res.status(404).json({ error: 'YoutuberID does not exist' });
+            }
+
+            // Check if ShirtID exists in the shirt table
+            const checkShirtQuery = 'SELECT ShirtID FROM shirt WHERE ShirtID = ?';
+            pool.query(checkShirtQuery, [ShirtID], (shirtErr, shirtResults) => {
+                if (shirtErr || shirtResults.length === 0) {
+                    return res.status(404).json({ error: 'ShirtID does not exist' });
+                }
+
+                // Insert into the endorsement table if both IDs exist
+                const insertQuery = 'INSERT INTO `endorsement` (YoutuberID, ShirtID) VALUES (?, ?)';
+                pool.query(insertQuery, [YoutuberID, ShirtID], (insertErr, insertResults) => {
+                    if (insertErr) {
+                        console.error("Database error during insert:", insertErr);
+                        return res.status(500).json({ error: 'Failed to add endorsement', details: insertErr });
+                    }
+
+                    res.status(200).json({ message: 'Endorsement successfully added' });
+                });
+            });
+        });
+    });
+});
 
 
 
@@ -342,10 +438,6 @@ app.delete('/customers/:id', (req, res) => {
 
 
 
-// Route for the customer page
-app.get('/customers.html', (req, res) => {
-    res.sendFile(path.join(__dirname, 'public', 'customers.html'));
-});
 
 
 //fallback route
