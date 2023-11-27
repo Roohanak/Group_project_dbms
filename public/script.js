@@ -395,16 +395,6 @@ document.getElementById('edit-customer-form')?.addEventListener('submit', (event
     });
 });
 
-// UPDATE customer information form appears
-function editRowById(id) {
-    const updateForm = document.querySelector('#edit-customer');
-
-    const editIdInput = document.querySelector('#edit-id');
-    editIdInput.value = id;
-
-    updateForm.hidden = false;
-}
-
 
 // Event listener for 'Edit Shirt' form submission
 document.getElementById('edit-shirt-form')?.addEventListener('submit', (event) => {
@@ -518,15 +508,15 @@ document.getElementById('edit-youtuber-form')?.addEventListener('submit', (event
 /***************************************************************************************************************************/
 /**'Cannot delete or update a parent row: a foreign key constraint fails (`yt_enterprise_dump`.`add-to-wishlist`, CONSTRAINT `shirt_cart_ibfk_3` FOREIGN KEY (`CustomerID`) REFERENCES `customer` (`ID`))', must remove current restriction and probably do cascading delete */
 
-// Button options in the table: edit or delete existing customer
-document.querySelector('table tbody').addEventListener('click', function(event) {
-    if (event.target.className === "delete-row-btn") {
-        deleteRowById(event.target.dataset.id);
-    }
-    if (event.target.className === "edit-row-btn") {
-        editRowById(event.target.dataset.id);
-    }
-});
+// UPDATE customer information form appears
+function editRowById(id) {
+    const updateForm = document.querySelector('#edit-customer');
+
+    const editIdInput = document.querySelector('#edit-id');
+    editIdInput.value = id;
+
+    updateForm.hidden = false;
+}
 
 // DELETE customer information based on ID
 function deleteRowById(id) {
@@ -548,15 +538,30 @@ function deleteRowById(id) {
 /***************************************************************************************************************************/
 /*                                             TABLE DISPLAYING EXISTING DATA                                              */
 /***************************************************************************************************************************/
-
-// Loading customer data
 document.addEventListener('DOMContentLoaded', function() {
-    fetch('http://localhost:3000/existingCustomers')
-    .then(response => response.json())
-    .then(data => loadHTMLTable(data['data']));
+    // Fetch data and load table only for the specific page
+    if (window.location.href.includes('http://localhost:3000/customer.html')) {
+        fetch('http://localhost:3000/existingCustomers')
+            .then(response => response.json())
+            .then(data => loadHTMLTable(data['data']));
+        
+        // If table element exist, user may interact with event listeners
+        const tbody = document.querySelector('table tbody');
+        if (tbody) {
+            tbody.addEventListener('click', function(event) {
+                if (event.target.className === "delete-row-btn") {
+                    deleteRowById(event.target.dataset.id);
+                }
+                if (event.target.className === "edit-row-btn") {
+                    editRowById(event.target.dataset.id);
+                }
+            });
+        } else {
+            console.error("Table tbody not found.");
+        }
+    }
 });
 
-// Table of existing customer
 function loadHTMLTable(data) {
     const table = document.querySelector('table tbody');
 
@@ -582,3 +587,4 @@ function loadHTMLTable(data) {
 
     table.innerHTML = tableHtml;
 }
+
