@@ -26,6 +26,24 @@ I dont want to mess up the database so for now i have them included in the forms
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------    */
 
 
+/********************************************************************************************************/
+/*                                       SELECT OPERATIONS                                              */
+/********************************************************************************************************/
+
+// List existing customers in the database
+app.get('/existingCustomers', (req, response) => {
+    const allCustomers = "SELECT * FROM yt_enterprise_dump.customer;"
+
+    pool.query(allCustomers, (err, results) => {
+        if(err) {
+            console.log(err);
+            response.status(500).json({error: "Internal Server Error"});
+        }
+
+        response.json({ data: results });
+    });
+});
+
 /**INSERT / ADD OPERATIONS */
 
 

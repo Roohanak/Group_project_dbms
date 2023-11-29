@@ -198,3 +198,44 @@ nav {
     padding: 10px 0;
     
 }
+
+/* TABLE */
+table {
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+#listShirts {
+    margin-top: 20px;
+}
+
+table, th, td {
+    border-collapse: collapse;
+    border: 1px solid #000;
+}
+
+th {
+    background-color: #CCCCCC;
+}
+
+th, td {
+    padding: 10px;
+}
+
+/* CUSTOMER FORM */
+.form-box {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-gap: 10px;
+    justify-content: center;
+}
+
+.form-box button, #edit-row-btn {
+    grid-column: span 2;
+}
+
+#edit-customer {
+    padding: 20px;
+    position: absolute;
+    background-color: white;
+}

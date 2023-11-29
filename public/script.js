@@ -60,15 +60,6 @@ document.getElementById('add-endorsement-button')?.addEventListener('click', () 
 });
 
 
-
-
-// Event listener for 'Edit Customer' button
-document.getElementById('edit-customer-button')?.addEventListener('click', () => {
-    toggleVisibility('edit-customer-tab', true);
-    toggleVisibility('edit-customer-button', false);
-});
-
-
 // Event listener for 'Edit Shirt' button
 document.getElementById('edit-shirt-button')?.addEventListener('click', () => {
     toggleVisibility('edit-shirt-tab', true);
@@ -82,16 +73,6 @@ document.getElementById('edit-youtuber-button')?.addEventListener('click', () =>
     toggleVisibility('edit-youtuber-tab', true);
     toggleVisibility('edit-youtuber-button', false);
 });
-
-
-
-/* 
-// deleter customer event listner(might have to use the function above instead)
-document.getElementById('delete-customer-button').addEventListener('click', function() {
-    document.getElementById('delete-customer-tab').style.display = 'block';
-});*/
-
-
 
 
 
@@ -597,6 +578,15 @@ document.getElementById('edit-youtuber-form')?.addEventListener('submit', (event
     });
 });
 
+// UPDATE customer information form appears
+function editRowById(id) {
+    const updateForm = document.querySelector('#edit-customer');
+
+    const editIdInput = document.querySelector('#edit-id');
+    editIdInput.value = id;
+
+    updateForm.hidden = false;
+}
 
 
 
@@ -615,21 +605,14 @@ document.getElementById('edit-youtuber-form')?.addEventListener('submit', (event
 
 
 
-
-
-
-
-
-/**DELETE/REMOVE OPERATION */
-
-
+/********************************************************************************************************/
+/*                                       DELETE OPERATIONS                                              */
+/********************************************************************************************************/
 /**'Cannot delete or update a parent row: a foreign key constraint fails (`yt_enterprise_dump`.`add-to-wishlist`, CONSTRAINT `shirt_cart_ibfk_3` FOREIGN KEY (`CustomerID`) REFERENCES `customer` (`ID`))', must remove current restriction and probably do cascading delete */
-// Event listener for the 'Delete Customer' form submission
-document.getElementById('delete-customer-form')?.addEventListener('submit', (event) => {
-    event.preventDefault();
-    const customerId = document.getElementById('delete-id').value;
 
-    fetch(`/customers/${customerId}`, {
+// DELETE customer information based on ID
+function deleteRowById(id) {
+    fetch('http://localhost:3000/customers/' + id, {
         method: 'DELETE'
     })
     .then(response => {
@@ -640,12 +623,66 @@ document.getElementById('delete-customer-form')?.addEventListener('submit', (eve
     })
     .then(data => {
         console.log('Success:', data);
-        alert("Customer has been successfully deleted from the database.");
-        window.location.href = 'customer.html'; // Redirect 
+        alert(`Customer has been successfully removed from the database.`);
+        window.location.href = 'customer.html';
     })
     .catch(error => {
         console.error('Error:', error);
-        alert("An error occurred. Please try again later.");
     });
+}
+
+/********************************************************************************************************/
+/*                                    TABLE DISPLAYING EXISTING DATA                                    */
+/********************************************************************************************************/
+document.addEventListener('DOMContentLoaded', function() {
+    // Fetch data and load table only for the specific page
+    if (window.location.href.includes('http://localhost:3000/customer.html')) {
+        fetch('http://localhost:3000/existingCustomers')
+            .then(response => response.json())
+            .then(data => loadHTMLTable(data['data']));
+        
+        // If table element exist, user may interact with event listeners
+        const tbody = document.querySelector('table tbody');
+        if (tbody) {
+            tbody.addEventListener('click', function(event) {
+                if (event.target.className === "delete-row-btn") {
+                    deleteRowById(event.target.dataset.id);
+                }
+                if (event.target.className === "edit-row-btn") {
+                    editRowById(event.target.dataset.id);
+                }
+            });
+        } else {
+            console.error("Table tbody not found.");
+        }
+    }
 });
+
+// Display a table
+function loadHTMLTable(data) {
+    const table = document.querySelector('table tbody');
+
+    console.log(data);
+    
+    if (data.length === 0) {
+        table.innerHTML = "<tr><td class='no-data' colspan='6' align='center'><em>There's currently no customer information</em></td></tr>";
+        return;
+    }
+
+    let tableHtml = "";
+
+    data.forEach(function ({ID, Name, Email, Address}) {
+        tableHtml += "<tr>";
+        tableHtml += `<td>${ID}</td>`;
+        tableHtml += `<td>${Name}</td>`;
+        tableHtml += `<td>${Email}</td>`;
+        tableHtml += `<td>${Address}</td>`;
+        tableHtml += `<td><button class="edit-row-btn" data-id=${ID}>Edit</td>`;
+        tableHtml += `<td><button class="delete-row-btn" data-id=${ID}>Delete</td>`;
+        tableHtml += "</tr>";
+    });
+
+    table.innerHTML = tableHtml;
+}
+
 
