@@ -318,7 +318,7 @@ app.post('/endorsement', (req, res) => {
 
 
 
-// EDIT/update CRUDE OPERATIONS//
+// EDIT/update CRUD OPERATIONS//
 
 
 // Update a customer by ID
