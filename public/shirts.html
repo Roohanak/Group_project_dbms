@@ -82,7 +82,25 @@
             </div>
 
 
-            <!--Delete shirt button-->
+
+
+                <h1>Existing Shirt</h1>
+                <button id="loadShirtButton">Get All Shirt</button>
+             
+                <table id="listShirt" style="display: none;">
+                    <thead>
+                        <th>ShirtID</th>
+                        <th>Size</th>
+                        <th>Color</th>
+                        <th>Deadline</th>
+                        <th>DesignPercentage</th>
+                        
+                    </thead>
+                <tbody></tbody>
+                </table>
+
+
+            <!--Delete shirt button
             <button id="shirt-button">Delete Shirt</button>
             <div id="shirt-tab" style="display: none;">
                 <form id="delete-shirt-form"></form>
@@ -92,7 +110,7 @@
                 <button id="submitButton" type="submit">Delete Shirt</button>
 
 
-            </div>
+            </div>-->
 
 
             <h1>Send back a Shirt </h1>
@@ -116,12 +134,21 @@
             </div>
 
 
-            
-            <h1>Returned Shirts </h1>
-            <button id="returned-shirt-Button">Check</button>
-            <div id="check-returned-tab" style="display: none;">
+                <h1>Return Forms</h1>
+                <button id="loadReturnButton">Get Return Forms</button>
+             
+                <table id="listReturnForms" style="display: none;">
+                    <thead>
+                        <th>ReturnID</th>
+                        <th>CheckerName</th>
+                        <th>ReturnDate</th>
+                        <th>ReasonsForReturn</th>
+                        <th>ActionTaken</th>
+                    </thead>
+                <tbody></tbody>
+                </table>
+             
 
-            </div>
 
 
             
@@ -146,11 +173,13 @@
 
 
             
-            
+            <!--  Check shirt condition-
             <button id="check-shirt_condition-button">Check a Shirt</button>
             <div id="check-shirt_condition-tab" style="display: none;">   
                 
             </div>
+            -->
+
         </div>
 
        

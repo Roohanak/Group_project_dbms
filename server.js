@@ -44,7 +44,60 @@ app.get('/existingCustomers', (req, response) => {
     });
 });
 
-/**INSERT / ADD OPERATIONS */
+
+
+// List existing RETURN FORM in the database
+app.get('/existingReturnForm', (req, response) => {
+    const allReturnForm = "SELECT * FROM yt_enterprise_dump.return_form;"
+
+    pool.query(allReturnForm, (err, results) => {
+        if(err) {
+            console.log(err);
+            response.status(500).json({error: "Internal Server Error"});
+        }
+
+        response.json({ data: results });
+    });
+});
+
+
+// List existing wishlist in the database
+app.get('/existingWishList', (req, response) => {
+    const allwishlist = "SELECT * FROM yt_enterprise_dump.`add-to-wishlist`;"
+
+    pool.query(allwishlist, (err, results) => {
+        if(err) {
+            console.log(err);
+            response.status(500).json({error: "Internal Server Error"});
+            return; 
+        }
+
+        response.json({ data: results });
+    });
+});
+
+
+// List existing shirts in the database
+app.get('/existingShirts', (req, response) => {
+    const allShirts = "SELECT * FROM yt_enterprise_dump.shirt;"
+
+    pool.query(allShirts, (err, results) => {
+        if(err) {
+            console.log(err);
+            response.status(500).json({error: "Internal Server Error"});
+            return; 
+        }
+
+        response.json({ data: results });
+    });
+});
+
+
+
+
+/********************************************************************************************************/
+/*                                       INSERT/ADD OPERATIONS                                              */
+/********************************************************************************************************/
 
 
 // insert customer (
@@ -336,7 +389,9 @@ app.post('/endorsement', (req, res) => {
 
 
 
-// EDIT/update CRUD OPERATIONS//
+/********************************************************************************************************/
+/*                                       EDIT/UPDATE OPERATIONS                                              */
+/********************************************************************************************************/
 
 
 // Update a customer by ID
@@ -428,7 +483,9 @@ app.put('/youtubers/:id', (req, res) => {
 
 
 
-/**DELETE/REMOVE OPERATIONS */
+/********************************************************************************************************/
+/*                                       DELETE/REMOVE OPERATIONS                                              */
+/********************************************************************************************************/
 
 
 /**'Cannot delete or update a parent row: a foreign key constraint fails (`yt_enterprise_dump`.`add-to-wishlist`, CONSTRAINT `shirt_cart_ibfk_3` FOREIGN KEY (`CustomerID`) REFERENCES `customer` (`ID`))', must remove current restriction and probably do cascading delete */
