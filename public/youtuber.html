@@ -87,6 +87,98 @@
                                 <label for="add-shirtid">ShirtID:</label><br>
                                 <input type="text" id="add-shirtid" name="add-shirtid"><br>
 
+                        <button id="submitButton" type="submit">Add endorsement</button>
+                    </form>
+                </div>   
+        </div>
+
+
+
+        
+        <link rel="stylesheet" type="text/css" href="style.css">
+    </head>
+
+    <body>
+        <nav>
+            <div class="nav-container">
+                <a href="#home" class="nav-logo">
+                    <img src="YoutubeShirts-logo.png" alt="Your Logo">
+                    <a href="#home" class="nav-logo">YouTube Shirts</a>
+                </a>
+                
+                <ul class="nav-links">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="customer.html">Customers</a></li>
+                    <li><a href="shirts.html">Shirts</a></li>
+                    <li><a href="wishlist.html">Wishlist</a></li>
+                    <li><a href="youtuber.html">Youtuber</a></li>
+                </ul>
+            </div>
+        </nav>
+
+        <main>
+            <div id="page-container">
+                <div id="content-wrap">
+                    <div class="centered-container">
+
+                        <h1>Youtuber </h1>
+                    
+                        <!-- ADD Youtuber -->
+                        <button id="add-youtuber-button">Add a YouTuber</button>
+                        <div id="add-youtuber-tab" style="display: none;">
+                        <h2>Add a new youtuber: </h2>
+                            <form id="add-youtuber-form">
+                                <label for="youtuberid">YouTuberID:</label><br>
+                                <input type="text" id="youtuberid" name="youtuberid"><br>  
+                                <label for="name">Name:</label><br>
+                                <input type="text" id="name" name="name"><br>
+                                <label for="channel">Channel:</label><br>
+                                <input type="text" id="channel" name="channel"><br>
+            
+                                <button id="submitButton" type="submit">Submit</button>
+                            </form>
+                        </div>
+
+                        <!-- EDIT Youtuber Info-->
+                        <button id="edit-youtuber-button">Edit a YouTuber</button>
+                        <div id="edit-youtuber-tab" style="display: none;">
+                            <form id="edit-youtuber-form">
+                                <label for="edit-youtuberid">YouTuberID:</label><br>
+                                <input type="text" id="edit-youtuberid" name="edit-youtuberid"><br>
+                                <label for="edit-youtubername">Name:</label><br>
+                                <input type="text" id="edit-youtubername" name="edit-youtubername"><br>
+                                <label for="edit-channel">Channel:</label><br>
+                                <input type="text" id="edit-channel" name="edit-channel"><br>
+                                
+                                <button id="submitButton" type="submit">Update</button>
+                            </form>
+                        </div>
+
+                        <!-- DELETE Youtuber -->
+                        <button id="delete-youtuber-button">Delete a YouTuber</button>
+                        <div id="delete-youtuber-tab" style="display: none;">
+                            <form id="delete-youtuber-form">
+                                <label for="delete-youtuberid">YouTuberID:</label><br>
+                                <input type="text" id="delete-youtuberid" name="delete-youtuberid"><br>
+                                <label for="delete-youtubername">Name:</label><br>
+                                <input type="text" id="delete-youtubername" name="delete-youtubername"><br>
+                                <label for="delete-channel">Channel:</label><br>
+                                <input type="text" id="delete-channel" name="delete-channel"><br>
+                                
+                                <button id="submitButton" type="submit">Delete</button>
+                            </form>
+                        </div>
+                    
+
+                        <h1>Endorsement </h1>
+                        <button id="add-endorsement-button">Add an endorsement</button>
+                        <div id="add-endorsement-tab" style="display: none;">
+                            <form id="add-endorsement-form">
+                                <label for="add-youtuberID">YoutuberID:</label><br>
+                                <input type="text" id="add-youtuberID" name="add-youtuberID"><br>
+                                <label for="add-shirtid">ShirtID:</label><br>
+                                <input type="text" id="add-shirtid" name="add-shirtid"><br>
+
                                 <button id="submitButton" type="submit">Add endorsement</button>
                             </form>
                         </div>   

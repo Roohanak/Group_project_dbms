@@ -337,10 +337,12 @@ document.getElementById('add-shirt_condition-form')?.addEventListener('submit', 
 
     // Collect the form data
     const qualityControlId = document.getElementById('qa-id').value;
-    const checkerName = document.getElementById('checkername').value;
+    const checkerName = document.getElementById('qacheckername').value;
     const inspectionDate = document.getElementById('inspecdate').value;
     const qualityRating = document.getElementById('qualityrating').value;
     const qualityIssues = document.getElementById('qualityissues').value;
+
+   
 
     // Send the POST request
     fetch('/shirt-quality', {
@@ -862,6 +864,92 @@ function loadHTMLTable(data) {
 
     table.innerHTML = tableHtml;
 }
+
+
+function loadHTMLTableReturnForm(data) {
+    const table = document.querySelector('#listReturnForms tbody');
+
+    console.log('Data received:', data);
+
+    if (data.length === 0) {
+        table.innerHTML = "<tr><td class='no-data' colspan='5'><em>There's currently no Return form</em></td></tr>";
+        return;
+    }
+
+    let tableHtml = "";
+
+    data.forEach(({ ReturnID, CheckerName, ReturnDate, ReasonForReturn, ActionTaken }) => {
+        tableHtml += `<tr>
+                        <td>${ReturnID}</td>
+                        <td>${CheckerName}</td>
+                        <td>${formatDate(ReturnDate)}</td>
+                        <td>${ReasonForReturn}</td>
+                        <td>${ActionTaken}</td>
+                      </tr>`;
+    });
+
+    table.innerHTML = tableHtml;
+}
+
+
+
+// Display a wishlist table
+function loadHTMLTableWishlist(data) {
+    const table = document.querySelector('table tbody');
+
+    console.log(data);
+    
+    if (data.length === 0) {
+        table.innerHTML = "<tr><td class='no-data' colspan='4' align='center'><em>There's currently no Wishlist information</em></td></tr>";
+        return;
+    }
+
+    let tableHtml = "";
+
+    data.forEach(function ({ShirtID, CartID, CustomerID, DateAdded}) {
+        tableHtml += "<tr>";
+        tableHtml += `<td>${ShirtID}</td>`;
+        tableHtml += `<td>${CartID}</td>`;
+        
+        tableHtml += `<td>${CustomerID}</td>`;
+        tableHtml += `<td>${formatDate(DateAdded)}</td>`;
+        
+        
+        tableHtml += "</tr>";
+    });
+
+    table.innerHTML = tableHtml;
+}
+
+
+// Display a shirt table
+function loadHTMLTableShirt(data) {
+    const table = document.querySelector('table tbody');
+
+    console.log(data);
+    
+    if (data.length === 0) {
+        table.innerHTML = "<tr><td class='no-data' colspan='5' align='center'><em>There's currently no Return form</em></td></tr>";
+        return;
+    }
+
+    let tableHtml = "";
+
+    data.forEach(function ({ShirtID, Size, Color, Deadline, DesignPercentage}) {
+        tableHtml += "<tr>";
+        tableHtml += `<td>${ShirtID}</td>`;
+        tableHtml += `<td>${Size}</td>`;
+        
+        tableHtml += `<td>${Color}</td>`;
+        tableHtml += `<td>${formatDate(Deadline)}</td>`;
+        tableHtml += `<td>${DesignPercentage}</td>`;
+        
+        tableHtml += "</tr>";
+    });
+
+    table.innerHTML = tableHtml;
+}
+
 
 // Display Return Forms
 function loadHTMLTableReturnForm(data) {

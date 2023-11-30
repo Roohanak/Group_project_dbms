@@ -71,6 +71,7 @@ CREATE TABLE `buy` (
 
 LOCK TABLES `buy` WRITE;
 /*!40000 ALTER TABLE `buy` DISABLE KEYS */;
+INSERT INTO `buy` VALUES (1,1,'2023-01-05'),(2,3,'2023-02-20'),(3,5,'2023-03-25'),(4,2,'2023-04-10'),(5,4,'2023-05-15'),(6,6,'2023-06-23'),(7,7,'2023-08-01');
 /*!40000 ALTER TABLE `buy` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -100,6 +101,7 @@ CREATE TABLE `check-shirt` (
 
 LOCK TABLES `check-shirt` WRITE;
 /*!40000 ALTER TABLE `check-shirt` DISABLE KEYS */;
+INSERT INTO `check-shirt` VALUES (1,1,1),(2,3,2),(3,5,3),(4,2,4),(5,4,5),(6,6,6),(7,7,7);
 /*!40000 ALTER TABLE `check-shirt` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -151,6 +153,7 @@ CREATE TABLE `endorsement` (
 
 LOCK TABLES `endorsement` WRITE;
 /*!40000 ALTER TABLE `endorsement` DISABLE KEYS */;
+INSERT INTO `endorsement` VALUES (1,1),(4,2),(2,3),(5,4),(3,5),(6,6),(7,7);
 /*!40000 ALTER TABLE `endorsement` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -234,6 +237,7 @@ CREATE TABLE `returned` (
 
 LOCK TABLES `returned` WRITE;
 /*!40000 ALTER TABLE `returned` DISABLE KEYS */;
+INSERT INTO `returned` VALUES (1,1,1),(2,3,2),(3,5,3),(4,2,4),(5,4,5),(6,6,6),(7,7,7);
 /*!40000 ALTER TABLE `returned` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -298,4 +302,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-11-22 18:50:16
+-- Dump completed on 2023-11-29 21:42:06

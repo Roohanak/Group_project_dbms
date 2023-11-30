@@ -13,7 +13,7 @@ app.use(express.static('public')); // Serve static files from the 'public' direc
 const pool = mysql.createPool({
     host: "localhost",
     user: "root",
-    password: "LSUtigers12!",
+    password: "password",
     database: "yt_enterprise_dump"
 });
 
@@ -265,7 +265,9 @@ app.post('/return-form', (req, res) => {
 
 // Insert 'Shirt Quality Control' data
 app.post('/shirt-quality', (req, res) => {
-    const { QualityControlID, CheckerName,InspectionDate, QualityRating, QualityIssues } = req.body;
+    const { QualityControlID, CheckerName ,InspectionDate, QualityRating, QualityIssues } = req.body;
+
+    console.log("Inserting data:", { QualityControlID, CheckerName, InspectionDate, QualityRating, QualityIssues });
 
     // First, check if the QualityControlID is already taken
     const checkQuery = 'SELECT QualityControlID FROM quality_control_form WHERE QualityControlID = ?';
