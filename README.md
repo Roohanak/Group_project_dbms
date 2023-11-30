@@ -13,6 +13,10 @@ Before running the project, ensure the following prerequisites are installed on 
 ● Visual Studio Code (or any other IDE for developing the frontend and backend)
 ● npm (usually included with Node.js)
 
+## Frontend Overview
+The frontend server was created using HTML, CSS, and Node.js. Users can interact through
+clicking buttons and filling out information on forms to interact with MySQL database.
+
 ## Backend Overview
 The backend server is developed using Express.js and interacts with a MySQL database. It
 includes:
