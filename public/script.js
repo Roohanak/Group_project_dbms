@@ -833,6 +833,15 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 });
 
+// Event listener for fetching youtubers
+document.addEventListener('DOMContentLoaded', function() {
+    if (window.location.href.includes('http://localhost:3000/youtuber.html')) {
+        fetch('http://localhost:3000/existingYoutubers')
+            .then(response => response.json())
+            .then(data => loadHTMLTableYoutubers(data['data']));
+    }
+});
+
 
 /*************************************************************************/
 /*                          DISPLAY TABLES                               */
@@ -910,11 +919,8 @@ function loadHTMLTableWishlist(data) {
         tableHtml += "<tr>";
         tableHtml += `<td>${ShirtID}</td>`;
         tableHtml += `<td>${CartID}</td>`;
-        
         tableHtml += `<td>${CustomerID}</td>`;
         tableHtml += `<td>${formatDate(DateAdded)}</td>`;
-        
-        
         tableHtml += "</tr>";
     });
 
@@ -994,11 +1000,8 @@ function loadHTMLTableWishlist(data) {
         tableHtml += "<tr>";
         tableHtml += `<td>${ShirtID}</td>`;
         tableHtml += `<td>${CartID}</td>`;
-        
         tableHtml += `<td>${CustomerID}</td>`;
         tableHtml += `<td>${formatDate(DateAdded)}</td>`;
-        
-        
         tableHtml += "</tr>";
     });
 
@@ -1026,10 +1029,32 @@ function loadHTMLTableShirt(data) {
         tableHtml += `<td>${Color}</td>`;
         tableHtml += `<td>${formatDate(Deadline)}</td>`;
         tableHtml += `<td>${DesignPercentage}</td>`;
-        
         tableHtml += "</tr>";
     });
 
     table.innerHTML = tableHtml;
 }
 
+// Display youtubers
+function loadHTMLTableYoutubers(data) {
+    const table = document.querySelector('#listYoutubers tbody');
+
+    console.log('Data received:', data);
+
+    if (data.length === 0) {
+        table.innerHTML = "<tr><td class='no-data' colspan='3'><em>There's currently no Youtubers.</em></td></tr>";
+        return;
+    }
+
+    let tableHtml = "";
+
+    data.forEach(({ YouTuberID, Name, Channel }) => {
+        tableHtml += "<tr>";
+        tableHtml += `<td>${YouTuberID}</td>`;
+        tableHtml += `<td>${Name}</td>`;
+        tableHtml += `<td>${Channel}</td>`;
+        tableHtml += "</tr>";
+    });
+
+    table.innerHTML = tableHtml;
+}

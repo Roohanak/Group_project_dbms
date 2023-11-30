@@ -54,7 +54,7 @@ app.get('/existingReturnForm', (req, response) => {
 
 // List existing wishlist in the database
 app.get('/existingWishList', (req, response) => {
-    const allwishlist = "SELECT * FROM yt_enterprise_dump.`add-to-wishlist`;"
+    const allwishlist = "SELECT * FROM yt_enterprise_dump.add_to_wishlist;"
 
     pool.query(allwishlist, (err, results) => {
         if(err) {
@@ -83,7 +83,7 @@ app.get('/existingShirts', (req, response) => {
     });
 });
 
-// List existing shirts in the database
+// List existing youtubers in the database
 app.get('/existingYoutubers', (req, response) => {
     const allYoutubers = "SELECT * FROM yt_enterprise_dump.youtuber;"
 
@@ -97,6 +97,7 @@ app.get('/existingYoutubers', (req, response) => {
         response.json({ data: results });
     });
 });
+
 
 /*************************************************************************/
 /*                     INSERT/ADD OPERATIONS                             */
@@ -159,7 +160,7 @@ app.post('/wishlist', (req, res) => {
     const { shirtID, CartID, CustomerID, DateAdded } = req.body;
 
     // Check if CartID already exists
-    const checkCartQuery = 'SELECT CartID FROM `add-to-wishlist` WHERE CartID = ?';
+    const checkCartQuery = 'SELECT CartID FROM add_to_wishlist WHERE CartID = ?';
     pool.query(checkCartQuery, [CartID], (cartErr, cartResults) => {
         if (cartErr) {
             // Handle server error during CartID check
@@ -187,7 +188,7 @@ app.post('/wishlist', (req, res) => {
                 }
 
                 // Insert into the wishlist table if both IDs exist
-                const insertQuery = 'INSERT INTO `add-to-wishlist` (shirtID, CartID, CustomerID, DateAdded) VALUES (?, ?, ?, ?)';
+                const insertQuery = 'INSERT INTO add_to_wishlist (shirtID, CartID, CustomerID, DateAdded) VALUES (?, ?, ?, ?)';
                 pool.query(insertQuery, [shirtID, CartID, CustomerID, DateAdded], (insertErr, insertResults) => {
                     if (insertErr) {
                         // Handle insertion error
@@ -502,7 +503,6 @@ app.delete('/shirts/:id', (req, res) => {
         res.json({ message: `Shirt with ID ${id} deleted successfully` });
     });
 });
-
 
 /*************************************************************************/
 
