@@ -19,11 +19,7 @@ const pool = mysql.createPool({
     database: "yt_enterprise_dump"
 });
 
-/*----------------------------------------------------------------------NOTES------------------------------------------------------------------------------------------------------------------
-1.)MIGHT BE BETTER TO CREATE A SINGLE FUNCTION FOR EACH CRUD (ADD/UPDATE/DELETE) INSTEAD OF MULTIPLE INSERTS FOR EACH SINGLE THING BUT IM HAVING TROUBLE WITH THAT SO ILL HAVE THIS SCUFF FOR NOW
-2.)Also for the primary key such as ID and other IDs they need to be incremented as they are entered in the database but to do that I have to remove all the existing restrictions and dependencies but
-I dont want to mess up the database so for now i have them included in the forms to be inputted in.
------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------    */
+
 
 
 /********************************************************************************************************/
@@ -268,7 +264,9 @@ app.post('/return-form', (req, res) => {
 
 // Insert 'Shirt Quality Control' data
 app.post('/shirt-quality', (req, res) => {
-    const { QualityControlID, CheckerName,InspectionDate, QualityRating, QualityIssues } = req.body;
+    const { QualityControlID, CheckerName ,InspectionDate, QualityRating, QualityIssues } = req.body;
+
+    console.log("Inserting data:", { QualityControlID, CheckerName, InspectionDate, QualityRating, QualityIssues });
 
     // First, check if the QualityControlID is already taken
     const checkQuery = 'SELECT QualityControlID FROM quality_control_form WHERE QualityControlID = ?';
@@ -383,12 +381,6 @@ app.post('/endorsement', (req, res) => {
 
 
 
-
-
-
-
-
-
 /********************************************************************************************************/
 /*                                       EDIT/UPDATE OPERATIONS                                              */
 /********************************************************************************************************/
@@ -456,28 +448,6 @@ app.put('/youtubers/:id', (req, res) => {
         res.json({ message: `YouTuber with ID ${id} updated successfully` });
     });
 });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

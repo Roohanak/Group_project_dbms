@@ -175,7 +175,7 @@ if (shirtForm) {
 
 
 
-// Event listener for the wishlist form submission(might not be how you populate this table)
+// Event listener for the wishlist form submission
 
 const wishForm = document.getElementById('add-wishlist-form');
 if (wishForm) {
@@ -330,10 +330,12 @@ document.getElementById('add-shirt_condition-form')?.addEventListener('submit', 
 
     // Collect the form data
     const qualityControlId = document.getElementById('qa-id').value;
-    const checkerName = document.getElementById('checkername').value;
+    const checkerName = document.getElementById('qacheckername').value;
     const inspectionDate = document.getElementById('inspecdate').value;
     const qualityRating = document.getElementById('qualityrating').value;
     const qualityIssues = document.getElementById('qualityissues').value;
+
+   
 
     // Send the POST request
     fetch('/shirt-quality', {
@@ -458,7 +460,9 @@ if (endorsementForm) {
 
 
 
-//EDIT CRUD OPERATIONS//
+/********************************************************************************************************/
+/*                                       EDIT OPERATIONS                                              */
+/********************************************************************************************************/
 
 
 
@@ -601,21 +605,6 @@ function editRowById(id) {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 /********************************************************************************************************/
 /*                                       DELETE OPERATIONS                                              */
 /********************************************************************************************************/
@@ -747,7 +736,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 
-
+/*********************DISPLAY TABLES**************************************** */
 
 
 

@@ -29,12 +29,14 @@ Before getting started, ensure you have the following installed:
 2. Install VS code, create folder in VS code. Name it as "Group_project_dbms"
 3. After creating folder, open terminal and install the required Node.js packages: npm install 
 4. To interact with Database, run this command:npm install sql
-5. Create a file in VS code as server.js, copy and paste the code in  "Backend and CRUD operations" file to server.js file.
+
 
 
 ## Configuration
 
-Make sure to update the MySQL connection details in the Backend and CRUD operation file and rename it with 'server.js' in VS code, specifically:
+
+
+# Change database in server.js
 
 const pool = mysql.createPool({
     host: "localhost", //your host_name
@@ -51,15 +53,17 @@ const pool = mysql.createPool({
 
 2. Accessing the API
 
-To access the API and interact with the database, you can make HTTP requests to the following endpoints:
+To access the API and interact with the database:
 
-•	Get All Customers:
-To retrieve a list of all customers, make a GET request to:
-http://localhost:3000/customers
+•	Go to the Home page:
 
-•	Get a Specific Customer:
-To retrieve a specific customer by their ID, make a GET request to:
-http://localhost:3000/customers/{3}
+http://localhost:3000/index
+
+•	Go to the Customer page:
+
+http://localhost:3000/customer
+
+
 
 
 
