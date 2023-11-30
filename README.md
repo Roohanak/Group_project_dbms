@@ -12,7 +12,13 @@ Before running the project, ensure you have the following prerequisites installe
 
 # Group Project DBMS Backend
 
-This is the backend server for the Group Project Database Management System (DBMS). It provides API endpoints to interact with the database.
+The backend server is developed using Express.js and interacts with a MySQL database. It includes:
+
+CRUD operations for managing customers, shirts, YouTubers, wishlists, purchases, and more.
+RESTful API endpoints for various database interactions.
+Connection pooling for efficient database access.
+Basic error handling and validation checks.
+
 
 ## Prerequisites
 
