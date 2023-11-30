@@ -51,14 +51,19 @@ The server will start and listen on port 3000.
 
 # Accessing the API
 You can interact with the database using the provided API endpoints. Here are some examples:
+
 ● Get All Customers: Retrieve a list of all customers with a GET request to
 http://localhost:3000/existingCustomers.
+
 ● Get Specific Customer: Retrieve a specific customer by ID with a GET request to
 http://localhost:3000/customers/{id} (replace {id} with the actual customer ID).
+
 ● Add New Customer: Add a new customer with a POST request to
 http://localhost:3000/customers.
+
 ● Update Customer: Update a customer's information with a PUT request to
 http://localhost:3000/customers/{id}.
+
 ● Delete Customer: Remove a customer with a DELETE request to
 http://localhost:3000/customers/{id}.
 
