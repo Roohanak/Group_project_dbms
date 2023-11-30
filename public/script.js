@@ -197,7 +197,7 @@ if (wishForm) {
 
         const shirtid = document.getElementById('shirtid').value;
         const cartid = document.getElementById('cartid').value;
-        const customerid = document.getElementById('customerid').value;
+        const customerid = document.getElementById('wcustomerid').value;
         const dateadded = document.getElementById('dateadded').value;
 
         fetch('/wishlist', {
@@ -205,7 +205,7 @@ if (wishForm) {
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ shirtID: shirtid, CartID: cartid, CustomerID: customerid, DateAdded: dateadded }),
+            body: JSON.stringify({ ShirtID: shirtid, CartID: cartid, ID: customerid, DateAdded: dateadded }),
         })
         .then(response => response.json().then(data => ({ status: response.status, body: data })))
         .then(result => {
@@ -405,7 +405,8 @@ if (buyForm) {
                 return;
             }
             if (result.status !== 200) {
-                alert("An error occurred. Please try again later.");
+                alert("An error occurred. \nMight be a duplicate entry, please try a different input.");
+                
                 return;
             }
 
@@ -448,7 +449,7 @@ if (endorsementForm) {
                 return;
             }
             if (result.status !== 200) {
-                alert("An error occurred. Please try again later.");
+                alert("An error occurred. \nMight be a duplicate entry, please try a different input.");
                 return;
             }
 
@@ -996,11 +997,11 @@ function loadHTMLTableWishlist(data) {
 
     let tableHtml = "";
 
-    data.forEach(function ({ShirtID, CartID, CustomerID, DateAdded}) {
+    data.forEach(function ({ShirtID, CartID, ID, DateAdded}) {
         tableHtml += "<tr>";
         tableHtml += `<td>${ShirtID}</td>`;
         tableHtml += `<td>${CartID}</td>`;
-        tableHtml += `<td>${CustomerID}</td>`;
+        tableHtml += `<td>${ID}</td>`;
         tableHtml += `<td>${formatDate(DateAdded)}</td>`;
         tableHtml += "</tr>";
     });

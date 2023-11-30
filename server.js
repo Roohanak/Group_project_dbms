@@ -13,7 +13,7 @@ app.use(express.static('public')); // Serve static files from the 'public' direc
 const pool = mysql.createPool({
     host: "localhost",
     user: "root",
-    password: "password",
+    password: "Flygon=03",
     database: "yt_enterprise_dump"
 });
 
@@ -157,9 +157,9 @@ app.post('/shirt', (req, res) => {
 //INSERT new wishlist(might not be how you populate this table)
 
 app.post('/wishlist', (req, res) => {
-    const { shirtID, CartID, CustomerID, DateAdded } = req.body;
+    const { ShirtID, CartID, ID, DateAdded } = req.body;
 
-    // Check if CartID already exists
+    // Ch0eck if CartID already exists
     const checkCartQuery = 'SELECT CartID FROM add_to_wishlist WHERE CartID = ?';
     pool.query(checkCartQuery, [CartID], (cartErr, cartResults) => {
         if (cartErr) {
@@ -175,23 +175,24 @@ app.post('/wishlist', (req, res) => {
 
         // Check if ShirtID exists in the shirt table
         const checkShirtQuery = 'SELECT ShirtID FROM shirt WHERE ShirtID = ?';
-        pool.query(checkShirtQuery, [shirtID], (shirtErr, shirtResults) => {
+        pool.query(checkShirtQuery, [ShirtID], (shirtErr, shirtResults) => {
             if (shirtErr || shirtResults.length === 0) {
                 return res.status(404).json({ error: 'ShirtID does not exist' });
             }
 
             // Check if CustomerID exists in the customer table
             const checkCustomerQuery = 'SELECT ID FROM customer WHERE ID = ?';
-            pool.query(checkCustomerQuery, [CustomerID], (customerErr, customerResults) => {
+            pool.query(checkCustomerQuery, [ID], (customerErr, customerResults) => {
                 if (customerErr || customerResults.length === 0) {
                     return res.status(404).json({ error: 'CustomerID does not exist' });
                 }
 
                 // Insert into the wishlist table if both IDs exist
-                const insertQuery = 'INSERT INTO add_to_wishlist (shirtID, CartID, CustomerID, DateAdded) VALUES (?, ?, ?, ?)';
-                pool.query(insertQuery, [shirtID, CartID, CustomerID, DateAdded], (insertErr, insertResults) => {
+                const insertQuery = 'INSERT INTO add_to_wishlist (ShirtID, CartID, ID, DateAdded) VALUES (?, ?, ?, ?)';
+                pool.query(insertQuery, [ShirtID, CartID, ID, DateAdded], (insertErr, insertResults) => {
                     if (insertErr) {
                         // Handle insertion error
+                        console.error("Database insert error!!!!", cartErr);
                         return res.status(500).json({ error: 'Failed to add to wishlist' });
                     }
 
