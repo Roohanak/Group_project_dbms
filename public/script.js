@@ -1,3 +1,6 @@
+/*************************************************************************/
+/*                         EVENT LISTENERS                               */
+/*************************************************************************/
 
 
 // Function to toggle visibility of elements
@@ -66,13 +69,36 @@ document.getElementById('edit-shirt-button')?.addEventListener('click', () => {
     toggleVisibility('edit-shirt-button', false);
 });
 
-
-
 // Event listener for 'Edit YouTuber' button
 document.getElementById('edit-youtuber-button')?.addEventListener('click', () => {
     toggleVisibility('edit-youtuber-tab', true);
     toggleVisibility('edit-youtuber-button', false);
 });
+
+// Event listener for 'Delete YouTuber' button
+document.getElementById('delete-youtuber-button')?.addEventListener('click', () => {
+    toggleVisibility('delete-youtuber-tab', true);
+    toggleVisibility('delete-youtuber-button', false);
+});
+
+// Event listener for 'Delete Shirt' button
+document.getElementById('delete-shirt-button')?.addEventListener('click', () => {
+    toggleVisibility('delete-shirt-tab', true);
+    toggleVisibility('delete-shirt-button', false);
+});
+
+// Event listener for 'Delete wishlist' button
+document.getElementById('delete-wishlist-button')?.addEventListener('click', () => {
+    toggleVisibility('delete-wishlist-tab', true);
+    toggleVisibility('delete-wishlist-button', false);
+});
+
+
+// date formatting
+function formatDate(dateString) {
+    const date = new Date(dateString);
+    return date.toISOString().split('T')[0]; 
+}
 
 
 
@@ -163,9 +189,7 @@ if (shirtForm) {
 }
 
 
-
 // Event listener for the wishlist form submission(might not be how you populate this table)
-
 const wishForm = document.getElementById('add-wishlist-form');
 if (wishForm) {
     wishForm.addEventListener('submit', function(event) {
@@ -221,9 +245,6 @@ if (wishForm) {
     });
 }
 
-
-
-
 // Event listener for the 'Add YouTuber' form submission
 document.getElementById('add-youtuber-form')?.addEventListener('submit', (event) => {
     event.preventDefault();
@@ -259,9 +280,6 @@ document.getElementById('add-youtuber-form')?.addEventListener('submit', (event)
         console.error('Error:', error);
     });
 });
-
-
-
 
 //add the return-form to the database
 // Event listener for the 'Return Shirt' form submission
@@ -443,13 +461,9 @@ if (endorsementForm) {
     });
 }
 
-
-
-
-
-//EDIT CRUD OPERATIONS//
-
-
+/*************************************************************************/
+/*                      EDIT/UPDATE OPERATIONS                           */
+/*************************************************************************/
 
 // event listners for edit customers
 document.getElementById('edit-customer-form')?.addEventListener('submit', (event) => {
@@ -536,10 +550,6 @@ document.getElementById('edit-shirt-form')?.addEventListener('submit', (event) =
     });
 });
 
-
-
-
-
 // Event listener for 'Edit YouTuber' form submission
 document.getElementById('edit-youtuber-form')?.addEventListener('submit', (event) => {
     event.preventDefault();
@@ -589,30 +599,45 @@ function editRowById(id) {
 }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/********************************************************************************************************/
-/*                                       DELETE OPERATIONS                                              */
-/********************************************************************************************************/
-/**'Cannot delete or update a parent row: a foreign key constraint fails (`yt_enterprise_dump`.`add-to-wishlist`, CONSTRAINT `shirt_cart_ibfk_3` FOREIGN KEY (`CustomerID`) REFERENCES `customer` (`ID`))', must remove current restriction and probably do cascading delete */
+/*************************************************************************/
+/*                         DELETE OPERATIONS                             */
+/*************************************************************************/
 
 // DELETE customer information based on ID
-function deleteRowById(id) {
-    fetch('http://localhost:3000/customers/' + id, {
+function deleteRowByIdCustomer(id) {
+    fetch('/customers/' + id, {
+        method: 'DELETE'
+    })
+    .then(response => {
+        if (!response.ok) {
+            alert(`Cannot delete customer. Dependencies exist.`);
+            return;
+        }
+        return response.json(); 
+    })
+    .then(data => {
+        if (data) {
+            console.log('Success:', data);
+            alert(`Customer has been successfully removed from the database.`);
+            window.location.href = 'customer.html';
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+    });
+}
+
+// DELETE Youtuber information based on ID
+document.getElementById('delete-youtuber-form')?.addEventListener('submit', (event) => {
+    event.preventDefault();
+
+    const youtuberId = document.getElementById('delete-youtuberid').value;
+
+    deleteByYoutuberId(youtuberId);
+});
+
+function deleteByYoutuberId(id) {
+    fetch('/youtubers/' + id, {
         method: 'DELETE'
     })
     .then(response => {
@@ -622,18 +647,96 @@ function deleteRowById(id) {
         return response.json();
     })
     .then(data => {
-        console.log('Success:', data);
-        alert(`Customer has been successfully removed from the database.`);
-        window.location.href = 'customer.html';
+        if (data) {
+            console.log('Success:', data);
+            alert(`Youtuber has been successfully removed from the database.`);
+            window.location.href = 'youtuber.html';
+        }
     })
     .catch(error => {
         console.error('Error:', error);
     });
 }
 
-/********************************************************************************************************/
-/*                                    TABLE DISPLAYING EXISTING DATA                                    */
-/********************************************************************************************************/
+// DELETE shirt based on ID
+document.getElementById('delete-shirt-form')?.addEventListener('submit', (event) => {
+    event.preventDefault();
+
+    const shirtId = document.getElementById('delete-shirtid').value;
+
+    deleteByShirtId(shirtId);
+});
+
+function deleteByShirtId(id) {
+    fetch('/shirts/' + id, {
+        method: 'DELETE'
+    })
+    .then(response => {
+        if (!response.ok) {
+            alert(`Cannot delete shirt. Dependencies exist.`);
+            return;
+        }
+        return response.json();
+    })
+    .then(data => {
+        if (data) {
+            console.log('Success:', data);
+            alert(`Shirt has been successfully removed from the database.`);
+            window.location.href = 'shirts.html';
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+    });
+}
+
+// DELETE wishlist
+document.getElementById('delete-wishlist-form')?.addEventListener('submit', (event) => {
+    event.preventDefault();
+
+    const wishShirtId = document.getElementById('delete-shirtid').value;
+    const wishCartId = document.getElementById('delete-cartid').value;
+    const wishCustomerId = document.getElementById('delete-customerid').value;
+    const wishDate = document.getElementById('delete-dateadded').value;
+
+    deleteWishItem(wishShirtId, wishCartId, wishCustomerId, wishDate);
+});
+
+function deleteWishItem(shirtId, cardId, customerId, date) {
+    fetch('/wishlist/', {
+        method: 'DELETE',
+        headers: {'Content-Type': 'application/json' },
+        body: JSON.stringify ({
+            shirtId: shirtId,
+            cardId: cardId,
+            customerId: customerId,
+            date: date
+        }),
+    })
+    .then(response => {
+        if (!response.ok) {
+            alert(`Cannot delete wish. Dependencies exist.`);
+            return;
+        }
+        return response.json();
+    })
+    .then(data => {
+        if (data) {
+            console.log('Success:', data);
+            alert(`Item has been removed from the wishlist`);
+            window.location.href = 'wishlist.html';
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+    });
+}
+
+/*************************************************************************/
+/*                   LOADING EXISTING DATA ONTO TABLE                    */
+/*************************************************************************/
+
+// Event listener for fetching customer
 document.addEventListener('DOMContentLoaded', function() {
     // Fetch data and load table only for the specific page
     if (window.location.href.includes('http://localhost:3000/customer.html')) {
@@ -646,7 +749,7 @@ document.addEventListener('DOMContentLoaded', function() {
         if (tbody) {
             tbody.addEventListener('click', function(event) {
                 if (event.target.className === "delete-row-btn") {
-                    deleteRowById(event.target.dataset.id);
+                    deleteRowByIdCustomer(event.target.dataset.id);
                 }
                 if (event.target.className === "edit-row-btn") {
                     editRowById(event.target.dataset.id);
@@ -658,7 +761,82 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 });
 
-// Display a table
+// event listner for fetching the return shirt table
+document.addEventListener('DOMContentLoaded', function() {
+    const loadReturnButton = document.getElementById('loadReturnButton');
+    const returnTable = document.getElementById('listReturnForms'); 
+
+    if (loadReturnButton && returnTable) {
+        loadReturnButton.addEventListener('click', function() {
+            if (returnTable.style.display === "none" || returnTable.style.display === '') {
+                fetch('http://localhost:3000/existingReturnForm')
+                    .then(response => response.json())
+                    .then(data => {
+                        loadHTMLTableReturnForm(data['data']);
+                        returnTable.style.display = 'block';
+                    });
+            } else {
+                returnTable.style.display = 'none';
+            }
+        });
+    } else {
+        //console.log('Return form elements not found');
+    }
+});
+
+
+// event listner for fetching the wishlist
+document.addEventListener('DOMContentLoaded', function() {
+    const loadWishListButton = document.getElementById('loadWishListTableButton');
+    const wishListTable = document.getElementById('listWishList'); 
+
+    if (loadWishListButton && wishListTable) {
+        loadWishListButton.addEventListener('click', function() {
+            if (wishListTable.style.display === "none" || wishListTable.style.display === '') {
+                fetch('http://localhost:3000/existingWishList')
+                    .then(response => response.json())
+                    .then(data => {
+                        loadHTMLTableWishlist(data['data']);
+                        wishListTable.style.display = 'block';
+                    });
+            } else {
+                wishListTable.style.display = 'none';
+            }
+        });
+    } else {
+        //console.log('Wishlist elements not found');
+    }
+});
+
+// event listner for fetching the shirts
+document.addEventListener('DOMContentLoaded', function() {
+    const loadShirtButton = document.getElementById('loadShirtButton');
+    const shirtTable = document.getElementById('listShirt'); 
+
+    if (loadShirtButton && shirtTable) {
+        loadShirtButton.addEventListener('click', function() {
+            if (shirtTable.style.display === "none" || shirtTable.style.display === '') {
+                fetch('http://localhost:3000/existingShirts')
+                    .then(response => response.json())
+                    .then(data => {
+                        loadHTMLTableShirt(data['data']);
+                        shirtTable.style.display = 'block';
+                    });
+            } else {
+                shirtTable.style.display = 'none';
+            }
+        });
+    } else {
+        //console.log('Shirt elements not found');
+    }
+});
+
+
+/*************************************************************************/
+/*                          DISPLAY TABLES                               */
+/*************************************************************************/
+
+// Display customer table
 function loadHTMLTable(data) {
     const table = document.querySelector('table tbody');
 
@@ -685,4 +863,85 @@ function loadHTMLTable(data) {
     table.innerHTML = tableHtml;
 }
 
+// Display Return Forms
+function loadHTMLTableReturnForm(data) {
+    const table = document.querySelector('#listReturnForms tbody');
+
+    console.log('Data received:', data);
+
+    if (data.length === 0) {
+        table.innerHTML = "<tr><td class='no-data' colspan='5'><em>There's currently no Return form</em></td></tr>";
+        return;
+    }
+
+    let tableHtml = "";
+
+    data.forEach(({ ReturnID, CheckerName, ReturnDate, ReasonForReturn, ActionTaken }) => {
+        tableHtml += `<tr>
+                        <td>${ReturnID}</td>
+                        <td>${CheckerName}</td>
+                        <td>${formatDate(ReturnDate)}</td>
+                        <td>${ReasonForReturn}</td>
+                        <td>${ActionTaken}</td>
+                      </tr>`;
+    });
+
+    table.innerHTML = tableHtml;
+}
+
+// Display a wishlist table
+function loadHTMLTableWishlist(data) {
+    const table = document.querySelector('table tbody');
+
+    console.log(data);
+    
+    if (data.length === 0) {
+        table.innerHTML = "<tr><td class='no-data' colspan='4' align='center'><em>There's currently no Wishlist information</em></td></tr>";
+        return;
+    }
+
+    let tableHtml = "";
+
+    data.forEach(function ({ShirtID, CartID, CustomerID, DateAdded}) {
+        tableHtml += "<tr>";
+        tableHtml += `<td>${ShirtID}</td>`;
+        tableHtml += `<td>${CartID}</td>`;
+        
+        tableHtml += `<td>${CustomerID}</td>`;
+        tableHtml += `<td>${formatDate(DateAdded)}</td>`;
+        
+        
+        tableHtml += "</tr>";
+    });
+
+    table.innerHTML = tableHtml;
+}
+
+
+// Display a shirt table
+function loadHTMLTableShirt(data) {
+    const table = document.querySelector('table tbody');
+
+    console.log(data);
+    
+    if (data.length === 0) {
+        table.innerHTML = "<tr><td class='no-data' colspan='5' align='center'><em>There's currently no Return form</em></td></tr>";
+        return;
+    }
+
+    let tableHtml = "";
+
+    data.forEach(function ({ShirtID, Size, Color, Deadline, DesignPercentage}) {
+        tableHtml += "<tr>";
+        tableHtml += `<td>${ShirtID}</td>`;
+        tableHtml += `<td>${Size}</td>`;
+        tableHtml += `<td>${Color}</td>`;
+        tableHtml += `<td>${formatDate(Deadline)}</td>`;
+        tableHtml += `<td>${DesignPercentage}</td>`;
+        
+        tableHtml += "</tr>";
+    });
+
+    table.innerHTML = tableHtml;
+}
 

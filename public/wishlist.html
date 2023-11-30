@@ -1,97 +1,92 @@
 <!DOCTYPE html>
-<html>
-
-
-    
-<head>
-    <title>Shirt Management</title>
-    
-    <link rel="stylesheet" type="text/css" href="style.css">
-</head>
-
-<body>
-
-
-
-    <nav>
-        <div class="nav-container">
-            <a href="#home" class="nav-logo">
-                <img src="YoutubeShirts-logo.png" alt="Your Logo">
-                <a href="#home" class="nav-logo">YouTube Shirts</a>
-            </a>
-            
-            <ul class="nav-links">
-                <li><a href="index.html">Home</a></li>
-                <li><a href="customer.html">Customers</a></li>
-                <li><a href="shirts.html">Shirts</a></li>
-                <li><a href="wishlist.html">Wishlist</a></li>
-                <li><a href="youtuber.html">Youtuber</a></li>
-                
-            </ul>
-        </div>
-    </nav>
-    <main>
-    <div id="page-container">
-        <div id="content-wrap">
-            <div class="centered-container">
-                <h1>Wish-list </h1>
-            
-                <button id="add-wishlist-button">Add to Wishlist</button>
-                <div id="add-wishlist-tab" style="display: none;">
-               
-
-                  
-            
-                <!--    new  forms         -->
-                <h2>Add a new youtuber</h2>
-                <form id="add-wishlist-form">
-                <label for="shirtid">ShirtID:</label><br>
-                <input type="text" id="shirtid" name="shirtid"><br>  
-                <label for="cartid">CartID:</label><br>
-                <input type="text" id="cartid" name="cartid"><br>
-                <label for="customerid">CustomerID:</label><br>
-                <input type="text" id="customerid" name="customerid"><br>
-                <label for="dateadded">DateAdded:</label><br>
-                <input type="text" id="dateadded" name="dateadded"><br>
-                
-                <button id="submitButton" type="submit">Add</button>
-
-                
-            </form>
-            </div>
-
-            <!-- delete button   -->
-            <button id="addButton">Delete from Wishlist</button>
-            <div id="customer-tab" style="display: none;">
-
-            </div>
-
-
-           
-
-            
-        </div>
-
-
-
+<html> 
+    <head>
+        <title>WISHLIST</title>
         
+        <link rel="stylesheet" type="text/css" href="style.css">
+    </head>
 
-       
-    </div>
-    </main>
+    <body>
+        <nav>
+            <div class="nav-container">
+                <a href="#home" class="nav-logo">
+                    <img src="YoutubeShirts-logo.png" alt="Your Logo">
+                    <a href="#home" class="nav-logo">YouTube Shirts</a>
+                </a>
+                
+                <ul class="nav-links">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="customer.html">Customers</a></li>
+                    <li><a href="shirts.html">Shirts</a></li>
+                    <li><a href="wishlist.html">Wishlist</a></li>
+                    <li><a href="youtuber.html">Youtuber</a></li>
+                </ul>
+            </div>
+        </nav>
 
+        <main>
+            <div id="page-container">
+                <div id="content-wrap">
+                    <div class="centered-container">
+                        <h1>Wishlist </h1>
+                    
+                        <!-- ADD to wishlist -->
+                        <button id="add-wishlist-button">Add to Wishlist</button>
+                        <div id="add-wishlist-tab" style="display: none;">
+                        <h2>Adding an Item to Wishlist</h2>
+                            <form id="add-wishlist-form">
+                                <label for="shirtid">ShirtID:</label><br>
+                                    <input type="text" id="shirtid" name="shirtid"><br>  
+                                <label for="cartid">CartID:</label><br>
+                                    <input type="text" id="cartid" name="cartid"><br>
+                                <label for="customerid">CustomerID:</label><br>
+                                    <input type="text" id="customerid" name="customerid"><br>
+                                <label for="dateadded">DateAdded:</label><br>
+                                    <input type="text" id="dateadded" name="dateadded" placeholder="YYYY-MM-DD"><br>
+                                
+                                <button id="submitButton" type="submit">Add</button>
+                            </form>
+                        </div>
 
+                        <!-- DELETE wishlist -->
+                        <button id="delete-wishlist-button">Remove from Wishlist</button>
+                        <div id="delete-wishlist-tab" style="display: none;">
+                        <h2>Removing an Item From Wishlist</h2>
+                            <form id="delete-wishlist-form">
+                                <label for="shirtid">ShirtID:</label><br>
+                                    <input type="text" id="delete-shirtid" name="shirtid"><br>  
+                                <label for="cartid">CartID:</label><br>
+                                    <input type="text" id="delete-cartid" name="cartid"><br>
+                                <label for="customerid">CustomerID:</label><br>
+                                    <input type="text" id="delete-customerid" name="customerid"><br>
+                                <label for="dateadded">DateAdded:</label><br>
+                                    <input type="text" id="delete-dateadded" name="dateadded" placeholder="YYYY-MM-DD"><br>
+                    
+                                <button id="submitButton" type="submit">Remove</button>
+                            </form>
+                        </div>
 
-  
-    <footer class="site-footer">
-        <p>&copy; 2023 YouTube Shirts. All rights reserved.</p>
-    </footer>
-   
-
-    <script src="script.js"></script>
-</body>
-
-
-
-
+                        <h1>Existing Wishlist</h1>
+                        <button id="loadWishListTableButton">Get Customers' Wishlist</button>
+                        <table id="listWishList" style="display: none;">
+                            <thead>
+                                <th>ShirtID</th>
+                                <th>CartID</th>
+                                <th>CustomerID</th>
+                                <th>DateAdded</th> 
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                
+                    </div>
+                </div>
+            </div>
+        </main>
+    
+        <footer class="site-footer">
+            <p>&copy; 2023 YouTube Shirts. All rights reserved.</p>
+        </footer>
+    
+        <script src="script.js"></script>
+    </body>
 </html>  

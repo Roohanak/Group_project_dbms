@@ -1,173 +1,180 @@
 <!DOCTYPE html>
 <html>
+    <head>
+        <title>SHIRTS</title>
+        
+        <link rel="stylesheet" type="text/css" href="style.css">
+    </head>
 
-
-    
-<head>
-    <title>Shirt Management</title>
-    
-    <link rel="stylesheet" type="text/css" href="style.css">
-</head>
-
-<body>
-
-
-
-    <nav>
-        <div class="nav-container">
-            <a href="#home" class="nav-logo">
-                <img src="YoutubeShirts-logo.png" alt="Your Logo">
-                <a href="#home" class="nav-logo">YouTube Shirts</a>
-            </a>
-            
-            <ul class="nav-links">
-                <li><a href="index.html">Home</a></li>
-                <li><a href="customer.html">Customers</a></li>
-                <li><a href="shirts.html">Shirts</a></li>
-                <li><a href="wishlist.html">Wishlist</a></li>
-                <li><a href="youtuber.html">Youtuber</a></li>
+    <body>
+        <nav>
+            <div class="nav-container">
+                <a href="#home" class="nav-logo">
+                    <img src="YoutubeShirts-logo.png" alt="Your Logo">
+                    <a href="#home" class="nav-logo">YouTube Shirts</a>
+                </a>
                 
-            </ul>
-        </div>
-    </nav>
-    <main>
-
-    <div id="page-container">
-        <div id="content-wrap">
-            <div class="centered-container">
-                <h1>Shirts </h1>
-            
-                <button id="add-shirt-button">Add Shirt</button>
-                <div id="add-shirt-tab" style="display: none;">
-               
-
-                  
-            
-                <!--    new shirts forms         -->
-                <h2>Add a new shirt</h2>
-                <form id="add-shirt-form">
-                <label for="shirtid">ShirtID:</label><br>
-                <input type="text" id="shirtid" name="shirtid"><br>  
-                <label for="size">Size:</label><br>
-                <input type="text" id="size" name="size"><br>
-                <label for="color">Color:</label><br>
-                <input type="text" id="color" name="color"><br>
-                <label for="deadline">Deadline:</label><br>
-                <input type="text" id="deadline" name="deadline"><br>
-                <label for="designpercentage">Design Percentage:</label><br>
-                <input type="text" id="designpercentage" name="designpercentage"><br>
-                <button id="submitButton" type="submit">Add Shirt</button>
-
-                
-            </form>
+                <ul class="nav-links">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="customer.html">Customers</a></li>
+                    <li><a href="shirts.html">Shirts</a></li>
+                    <li><a href="wishlist.html">Wishlist</a></li>
+                    <li><a href="youtuber.html">Youtuber</a></li>
+                </ul>
             </div>
+        </nav>
 
-            <!-- Edit shirt button   -->
-            <button id="edit-shirt-button">Edit Shirt</button>
-            <div id="edit-shirt-tab" style="display: none;">
-                <form id="edit-shirt-form">
-                    <label for="edit-shirtid">ShirtID:</label><br>
-                    <input type="text" id="edit-shirtid" name="edit-shirtid"><br>
-                    <label for="edit-size">Size:</label><br>
-                    <input type="text" id="edit-size" name="edit-size"><br>
-                    <label for="edit-color">Color:</label><br>
-                    <input type="text" id="edit-color" name="edit-color"><br>
-                    <label for="edit-deadline">Deadline:</label><br>
-                    <input type="text" id="edit-deadline" name="edit-deadline"><br>
-                    <label for="edit-designpercentage">Design Percentage:</label><br>
-                    <input type="text" id="edit-designpercentage" name="edit-designpercentage"><br>
-                    <button id="submitButton" type="submit">Edit Shirt</button>
-                </form>
+        <main>
+            <div id="page-container">
+                <div id="content-wrap">
+                    <div class="centered-container">
 
+                        <h1>Shirts</h1>
+                    
+                        <!-- ADD new shirt -->
+                        <button id="add-shirt-button">Add a Shirt</button>
+                        <div id="add-shirt-tab" style="display: none;">
+                        <h2>Adding a shirt</h2>
+                            <form id="add-shirt-form">
+                                <label for="shirtid">Shirt ID:</label><br>
+                                    <input type="text" id="shirtid" name="shirtid"><br>  
+                                <label for="size">Size:</label><br>
+                                    <input type="text" id="size" name="size"><br>
+                                <label for="color">Color:</label><br>
+                                    <input type="text" id="color" name="color"><br>
+                                <label for="deadline">Deadline:</label><br>
+                                    <input type="text" id="deadline" name="deadline" placeholder="YYYY-MM-DD"><br>
+                                <label for="designpercentage">Design Percentage:</label><br>
+                                    <input type="text" id="designpercentage" name="designpercentage"><br>
+
+                                <button id="submitButton" type="submit">Submit</button>
+                            </form>
+                        </div>
+
+                        <!-- Edit shirt button   -->
+                        <button id="edit-shirt-button">Edit a Shirt</button>
+                        <div id="edit-shirt-tab" style="display: none;">
+                        <h2>Editing a shirt</h2>
+                            <form id="edit-shirt-form">
+                                <label for="edit-shirtid">ShirtID:</label><br>
+                                    <input type="text" id="edit-shirtid" name="edit-shirtid"><br>
+                                <label for="edit-size">Size:</label><br>
+                                    <input type="text" id="edit-size" name="edit-size"><br>
+                                <label for="edit-color">Color:</label><br>
+                                    <input type="text" id="edit-color" name="edit-color"><br>
+                                <label for="edit-deadline">Deadline:</label><br>
+                                    <input type="text" id="edit-deadline" name="edit-deadline" placeholder="YYYY-MM-DD"><br>
+                                <label for="edit-designpercentage">Design Percentage:</label><br>
+                                    <input type="text" id="edit-designpercentage" name="edit-designpercentage"><br>
+                                <button id="submitButton" type="submit">Update</button>
+                            </form>
+                        </div>
+
+                        <!-- DELETE shirt -->
+                        <button id="delete-shirt-button">Delete a Shirt</button>
+                        <div id="delete-shirt-tab" style="display: none;">
+                        <h2>Deleting a shirt</h2>
+                            <form id="delete-shirt-form">
+                                <label for="delete-shirtid">ShirtID:</label><br>
+                                    <input type="text" id="delete-shirtid" name="delete-shirtid"><br>
+                                <label for="delete-size">Size:</label><br>
+                                    <input type="text" id="delete-size" name="delete-size"><br>
+                                <label for="delete-color">Color:</label><br>
+                                    <input type="text" id="delete-color" name="delete-color"><br>
+                                <label for="delete-deadline">Deadline:</label><br>
+                                    <input type="text" id="delete-deadline" name="delete-deadline" placeholder="YYYY-MM-DD"><br>
+                                <label for="delete-designpercentage">Design Percentage:</label><br>
+                                    <input type="text" id="delete-designpercentage" name="delete-designpercentage"><br>
+
+                                <button id="submitButton" type="submit">Delete</button>
+                            </form>
+                        </div>
+
+                        <!-- Table view of current shirts in the database -->
+                        <h1>Existing Shirt</h1>
+                        <button id="loadShirtButton">Get All Shirt</button>
+                            <table id="listShirt" style="display: none;">
+                                <thead>
+                                    <th>ShirtID</th>
+                                    <th>Size</th>
+                                    <th>Color</th>
+                                    <th>Deadline</th>
+                                    <th>DesignPercentage</th>
+                                </thead>
+                                <tbody></tbody>
+                            </table>
+
+
+                        <h1>Send back a Shirt </h1>
+                        <button id="return-shirt-button">Return-Form </button>
+                        <div id="return-shirt-tab" style="display: none;">
+                            <form id="return-shirt-form">
+                                <label for="returnid">Return ID:</label><br>
+                                    <input type="text" id="returnid" name="returnid"><br>  
+                                <label for="checkername">Checker Name:</label><br>
+                                    <input type="text" id="checkername" name="checkername"><br>
+                                <label for="returndate">Return Date:</label><br>
+                                    <input type="text" id="returndate" name="returndate" placeholder="YYYY-MM-DD"><br>
+                                <label for="reasonforreturn">Reason For Return:</label><br>
+                                    <input type="text" id="reasonforreturn" name="reasonforreturn"><br>
+                                <label for="actiontaken">Action Taken:</label><br>
+                                    <input type="text" id="actiontaken" name="actiontaken"><br>
+
+                                <button id="submitButton" type="submit">Submit</button>
+                            </form>
+                        </div>
+
+
+                        <h1>Return Forms</h1>
+                        <button id="loadReturnButton">Get Return Forms</button>
+                        <table id="listReturnForms" style="display: none;">
+                            <thead>
+                                <th>ReturnID</th>
+                                <th>CheckerName</th>
+                                <th>ReturnDate</th>
+                                <th>ReasonsForReturn</th>
+                                <th>ActionTaken</th>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    
+                        <h1>Shirt condition</h1>
+                        <button id="add-shirt_condition-button">Quality Control Form</button>
+                        <div id="add-shirt_condition-tab" style="display: none;">  
+                            <form id="add-shirt_condition-form">
+                                <label for="qa-id">QualityControlID:</label><br>
+                                    <input type="text" id="qa-id" name="qa-id"><br>  
+                                <label for="checkername">CheckerName:</label><br>
+                                    <input type="text" id="checkername" name="checkername"><br> 
+                                <label for="inspecdate">InspectionDate:</label><br>
+                                    <input type="text" id="inspecdate" name="inspecdate" placeholder="YYYY-MM-DD"><br>
+                                <label for="qualityrating">QualityRating:</label><br>
+                                    <input type="text" id="qualityrating" name="qualityrating"><br>
+                                <label for="qualityissues">QualityIssues:</label><br>
+                                    <input type="text" id="qualityissues" name="qualityissues"><br>
+                            
+                                <button id="submitButton" type="submit">Submit Form</button> 
+                            </form>
+                        </div>
+
+
+                    
+                    <!--  Check shirt condition-
+                    <button id="check-shirt_condition-button">Check a Shirt</button>
+                    <div id="check-shirt_condition-tab" style="display: none;">   
+                        
+                    </div>
+                    -->
+
+                    </div>
+                </div>
             </div>
+        </main>
 
+        <footer class="site-footer">
+            <p>&copy; 2023 YouTube Shirts. All rights reserved.</p>
+        </footer>
 
-            <!--Delete shirt button-->
-            <button id="shirt-button">Delete Shirt</button>
-            <div id="shirt-tab" style="display: none;">
-                <form id="delete-shirt-form"></form>
-                <label for="delete-shirtid">ShirtID:</label><br>
-                <input type="text" id="delete-shirtid" name="delete-shirtid"><br> 
-
-                <button id="submitButton" type="submit">Delete Shirt</button>
-
-
-            </div>
-
-
-            <h1>Send back a Shirt </h1>
-            <button id="return-shirt-button">Return-Form </button>
-            <div id="return-shirt-tab" style="display: none;">
-                <form id="return-shirt-form">
-                    <label for="returnid">ReturnID:</label><br>
-                    <input type="text" id="returnid" name="returnid"><br>  
-                    <label for="checkername">CheckerName:</label><br>
-                    <input type="text" id="checkername" name="checkername"><br>
-                    <label for="returndate">ReturnDate:</label><br>
-                    <input type="text" id="returndate" name="returndate"><br>
-                    <label for="reasonforreturn">ReasonForReturn:</label><br>
-                    <input type="text" id="reasonforreturn" name="reasonforreturn"><br>
-                    <label for="actiontaken">ActionTaken:</label><br>
-                    <input type="text" id="actiontaken" name="actiontaken"><br>
-                    <button id="submitButton" type="submit">Submit Form</button>
-
-
-                </form>
-            </div>
-
-
-            
-            <h1>Returned Shirts </h1>
-            <button id="returned-shirt-Button">Check</button>
-            <div id="check-returned-tab" style="display: none;">
-
-            </div>
-
-
-            
-            <h1>Shirt condition</h1>
-            <button id="add-shirt_condition-button">Quality Control Form</button>
-            <div id="add-shirt_condition-tab" style="display: none;">  
-                <form id="add-shirt_condition-form">
-                    <label for="qa-id">QualityControlID:</label><br>
-                    <input type="text" id="qa-id" name="qa-id"><br>  
-                    <label for="checkername">CheckerName:</label><br>
-                    <input type="text" id="checkername" name="checkername"><br> 
-                    <label for="inspecdate">InspectionDate:</label><br>
-                    <input type="text" id="inspecdate" name="inspecdate"><br>
-                    <label for="qualityrating">QualityRating:</label><br>
-                    <input type="text" id="qualityrating" name="qualityrating"><br>
-                    <label for="qualityissues">QualityIssues:</label><br>
-                    <input type="text" id="qualityissues" name="qualityissues"><br>
-                
-                    <button id="submitButton" type="submit">Submit Form</button> 
-                </form>
-            </div>
-
-
-            
-            
-            <button id="check-shirt_condition-button">Check a Shirt</button>
-            <div id="check-shirt_condition-tab" style="display: none;">   
-                
-            </div>
-        </div>
-
-       
-    </div>
-
-    </main>
-
-    <footer class="site-footer">
-        <p>&copy; 2023 YouTube Shirts. All rights reserved.</p>
-    </footer>
-
-   
-
-    <script src="script.js"></script>
-</body>
-
-
-
-
+        <script src="script.js"></script>
+    </body>
 </html>  

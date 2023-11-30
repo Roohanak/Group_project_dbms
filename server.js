@@ -8,27 +8,19 @@ app.use(express.json()); // This line is important to handle JSON payloads
 
 const path = require('path');
 
-
-// Serve static files from the 'public' directory
-app.use(express.static('public'));
+app.use(express.static('public')); // Serve static files from the 'public' directory
 
 const pool = mysql.createPool({
     host: "localhost",
     user: "root",
-    password: "Flygon=03",
+    password: "LSUtigers12!",
     database: "yt_enterprise_dump"
 });
 
-/*----------------------------------------------------------------------NOTES------------------------------------------------------------------------------------------------------------------
-1.)MIGHT BE BETTER TO CREATE A SINGLE FUNCTION FOR EACH CRUD (ADD/UPDATE/DELETE) INSTEAD OF MULTIPLE INSERTS FOR EACH SINGLE THING BUT IM HAVING TROUBLE WITH THAT SO ILL HAVE THIS SCUFF FOR NOW
-2.)Also for the primary key such as ID and other IDs they need to be incremented as they are entered in the database but to do that I have to remove all the existing restrictions and dependencies but
-I dont want to mess up the database so for now i have them included in the forms to be inputted in.
------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------    */
 
-
-/********************************************************************************************************/
-/*                                       SELECT OPERATIONS                                              */
-/********************************************************************************************************/
+/*************************************************************************/
+/*                        SELECT OPERATIONS                              */
+/*************************************************************************/
 
 // List existing customers in the database
 app.get('/existingCustomers', (req, response) => {
@@ -44,10 +36,73 @@ app.get('/existingCustomers', (req, response) => {
     });
 });
 
-/**INSERT / ADD OPERATIONS */
+
+// List existing RETURN FORM in the database
+app.get('/existingReturnForm', (req, response) => {
+    const allReturnForm = "SELECT * FROM yt_enterprise_dump.return_form;"
+
+    pool.query(allReturnForm, (err, results) => {
+        if(err) {
+            console.log(err);
+            response.status(500).json({error: "Internal Server Error"});
+        }
+
+        response.json({ data: results });
+    });
+});
 
 
-// insert customer (
+// List existing wishlist in the database
+app.get('/existingWishList', (req, response) => {
+    const allwishlist = "SELECT * FROM yt_enterprise_dump.`add-to-wishlist`;"
+
+    pool.query(allwishlist, (err, results) => {
+        if(err) {
+            console.log(err);
+            response.status(500).json({error: "Internal Server Error"});
+            return; 
+        }
+
+        response.json({ data: results });
+    });
+});
+
+
+// List existing shirts in the database
+app.get('/existingShirts', (req, response) => {
+    const allShirts = "SELECT * FROM yt_enterprise_dump.shirt;"
+
+    pool.query(allShirts, (err, results) => {
+        if(err) {
+            console.log(err);
+            response.status(500).json({error: "Internal Server Error"});
+            return; 
+        }
+
+        response.json({ data: results });
+    });
+});
+
+// List existing shirts in the database
+app.get('/existingYoutubers', (req, response) => {
+    const allYoutubers = "SELECT * FROM yt_enterprise_dump.youtuber;"
+
+    pool.query(allYoutubers, (err, results) => {
+        if(err) {
+            console.log(err);
+            response.status(500).json({error: "Internal Server Error"});
+            return; 
+        }
+
+        response.json({ data: results });
+    });
+});
+
+/*************************************************************************/
+/*                     INSERT/ADD OPERATIONS                             */
+/*************************************************************************/
+
+// insert customer 
 app.post('/customers', (req, res) => {
     const { ID, Name, Email, Address } = req.body;
 
@@ -76,9 +131,6 @@ app.post('/customers', (req, res) => {
         });
     });
 });
-
-
-
 
 //insert new shirt
 app.post('/shirt', (req, res) => {
@@ -148,8 +200,6 @@ app.post('/wishlist', (req, res) => {
         });
     });
 });
-
-
 
 // insert youtuber
 app.post('/youtubers', (req, res) => {
@@ -328,16 +378,9 @@ app.post('/endorsement', (req, res) => {
 });
 
 
-
-
-
-
-
-
-
-
-// EDIT/update CRUD OPERATIONS//
-
+/*************************************************************************/
+/*                        EDIT/UPDATE OPERATIONS                         */
+/*************************************************************************/
 
 // Update a customer by ID
 app.put('/customers/:id', (req, res) => {
@@ -358,8 +401,6 @@ app.put('/customers/:id', (req, res) => {
         res.json({ message: `Customer with ID ${id} updated successfully` });
     });
 });
-
-
 
 // Update a shirt by ShirtID
 app.put('/shirts/:id', (req, res) => {
@@ -403,35 +444,10 @@ app.put('/youtubers/:id', (req, res) => {
 });
 
 
+/*************************************************************************/
+/*                        DELETE/REMOVE OPERATIONS                       */
+/*************************************************************************/
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/**DELETE/REMOVE OPERATIONS */
-
-
-/**'Cannot delete or update a parent row: a foreign key constraint fails (`yt_enterprise_dump`.`add-to-wishlist`, CONSTRAINT `shirt_cart_ibfk_3` FOREIGN KEY (`CustomerID`) REFERENCES `customer` (`ID`))', must remove current restriction and probably do cascading delete */
 // Delete a customer by ID
 app.delete('/customers/:id', (req, res) => {
     const { id } = req.params;
@@ -451,12 +467,42 @@ app.delete('/customers/:id', (req, res) => {
     });
 });
 
+// Delete a Youtuber by ID
+app.delete('/youtubers/:id', (req, res) => {
+    const { id } = req.params;
+    
+    const deleteQuery = 'DELETE FROM youtuber WHERE YoutuberID = ?';
+    pool.query(deleteQuery, [id], (err, results) => {
+        if (err) {
+            console.error(err);
+            return res.status(500).json({ error: 'Internal server error', details: err });
+        }
+        if (results.affectedRows === 0) {
+            return res.status(404).json({ error: 'Youtuber not found' });
+        }
+        res.json({ message: `Youtuber with ID ${id} deleted successfully` });
+    });
+});
+
+// Delete a shirt by ID
+app.delete('/shirts/:id', (req, res) => {
+    const { id } = req.params;
+    
+    const deleteQuery = 'DELETE FROM shirt WHERE ShirtID = ?';
+    pool.query(deleteQuery, [id], (err, results) => {
+        if (err) {
+            console.error(err);
+            return res.status(500).json({ error: 'Internal server error', details: err });
+        }
+        if (results.affectedRows === 0) {
+            return res.status(404).json({ error: 'Shirt was not found' });
+        }
+        res.json({ message: `Shirt with ID ${id} deleted successfully` });
+    });
+});
 
 
-
-
-
-
+/*************************************************************************/
 
 //fallback route
 app.get('*', (req, res) => {
@@ -466,6 +512,3 @@ app.get('*', (req, res) => {
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`);
 });
-
-
-
