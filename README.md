@@ -1,83 +1,66 @@
-# Group_project_dbms
+## Group Project DBMS
+# Overview
+This project is a Database Management System (DBMS) for managing a business related to
+customers, shirts, YouTubers, and other entities. It consists of a Node.js backend server that
+interacts with a MySQL database, providing a range of API endpoints for Create, Read, Update,
+and Delete (CRUD) operations.
+
 
 # Prerequisites
-Before running the project, ensure you have the following prerequisites installed on your system:
+Before running the project, ensure the following prerequisites are installed on your system:
+● Node.js (version 14 or higher)
+● MySQL (https://dev.mysql.com/downloads/)
+● Visual Studio Code (or any other IDE for developing the frontend and backend)
+● npm (usually included with Node.js)
 
-1.	Node.js - version 14 or higher.
-2.	npm - This is included with Node.js.
-3.	MySql- https://dev.mysql.com/downloads/
-4.	Visual Studio Code - Used to develop the frontend and backend
+## Backend Overview
+The backend server is developed using Express.js and interacts with a MySQL database. It
+includes:
+● CRUD operations for managing customers, shirts, YouTubers, wishlists, purchases, and
+more.
+● RESTful API endpoints for various database interactions.
+● Connection pooling for efficient database access.
+● Basic error handling and validation checks.
 
+# Installation
+Setting Up MySQL
+1. Download and install MySQL from the provided link.
+2. Create a database named yt_enterprise_dump in your MySQL Workbench.
+Setting Up the Node.js Backend
+1. Install Visual Studio Code (VS Code) from its official website.
+2. Open VS Code and create a new folder named Group_project_dbms.
+3. Open the terminal in VS Code and execute the following command to install required
+Node.js packages:
+4. npm install
+5. Install MySQL driver for Node.js:
+6. npm install mysql
 
+   
+# Configuration
+Update the MySQL connection details in the server.js file:
+javascript
+const pool = mysql.createPool({ host: "localhost", // Update with your host_name user: "root", //
+Update with your MySQL username password: "YOUR_MYSQL_PASSWORD", // Update with
+your MySQL password database: "yt_enterprise_dump" });
 
-# Group Project DBMS Backend
+# Usage
+Starting the Server
+Run the following command in the terminal to start the server:
+node server.js
+The server will start and listen on port 3000.
 
-This is the backend server for the Group Project Database Management System (DBMS). It provides API endpoints to interact with the database.
-
-## Prerequisites
-
-Before getting started, ensure you have the following installed:
-
-- Node.js
-- MySQL (with a database named `yt_enterprise_dump`)
-- npm
-
-## Installation
-
-1. save dbms dump file in your downloaded Mysql workbench
-
-2. Install VS code, create folder in VS code. Name it as "Group_project_dbms"
-3. After creating folder, open terminal and install the required Node.js packages: npm install 
-4. To interact with Database, run this command:npm install sql
-
-
-
-## Configuration
-
-
-
-# Change database in server.js
-
-const pool = mysql.createPool({
-    host: "localhost", //your host_name
-    user: "root", // your_username
-    password: "YOUR_MYSQL_PASSWORD", //your password
-    database: "yt_enterprise"
-});
-
-## Usage
-
-
-1. Start the server, run this code:
-   node server.js
-
-2. Accessing the API
-
-To access the API and interact with the database:
-
-•	Go to the Home page:
-
-http://localhost:3000/index
-
-•	Go to the Customer page:
-
-http://localhost:3000/customer
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+# Accessing the API
+You can interact with the database using the provided API endpoints. Here are some examples:
+● Get All Customers: Retrieve a list of all customers with a GET request to
+http://localhost:3000/existingCustomers.
+● Get Specific Customer: Retrieve a specific customer by ID with a GET request to
+http://localhost:3000/customers/{id} (replace {id} with the actual customer ID).
+● Add New Customer: Add a new customer with a POST request to
+http://localhost:3000/customers.
+● Update Customer: Update a customer's information with a PUT request to
+http://localhost:3000/customers/{id}.
+● Delete Customer: Remove a customer with a DELETE request to
+http://localhost:3000/customers/{id}.
 
 
 
