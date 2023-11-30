@@ -1,4 +1,4 @@
-# Group_project_dbms
+# Frontend Overview
 
 # How to access to our web:
 1. Make sure you completed the prerequisites, installations, and configurations before accessing the user interface. (Refer to README.md)
