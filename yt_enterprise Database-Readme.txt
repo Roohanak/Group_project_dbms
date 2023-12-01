@@ -1,6 +1,6 @@
-# README - yt_enterprise Database
+# README - yt_enterprise_dump Database
 
-This README provides instructions for setting up and using the `yt_enterprise` MySQL database along with the provided SQL dump file.
+This README provides instructions for setting up and using the `yt_enterprise_dump.sql` MySQL database along with the provided SQL dump file.
 
 ## Table of Contents
 
@@ -12,11 +12,11 @@ This README provides instructions for setting up and using the `yt_enterprise` M
 
 ## Database Overview
 
-The `yt_enterprise` database contains information related to the YT-Shirts enterprise, as described in the project documentation.
+The `yt_enterprise_dump` database contains information related to the YT-Shirts enterprise, as described in the project documentation.
 
 ## Prerequisites
 
-To work with the `yt_enterprise` database, you'll need:
+To work with the `yt_enterprise_dump` database, you'll need:
 
 - MySQL installed on your system.
 - Appropriate MySQL user credentials (username and password).
@@ -31,3 +31,10 @@ To work with the `yt_enterprise` database, you'll need:
 
    bash
    mysql -u your_username -p -D your_database < yt_enterprise_dump.sql
+
+or 
+
+after saving file in your directory, open your mysql workbench and follow these steps:
+"file" > import > reverse engineer SQL script > select file "yt_enterprise_dump" > Run the Single Transaction file that you just uploaded.
+
+Note: our file name and database name is same: "yt_enterprise_dump"
